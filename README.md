@@ -114,7 +114,7 @@ Notice the files need to be copied to the 'ad_media_laura' project
 gsutil -m cp -r /home/jyao01/github/google_2022/data/wav_c gs://ad_data_files/google_2022/batch_03162022
 ```
 
-Step3 (opitional): activate an environment before running .py file
+Step3 (optional): activate an environment before running .py file
 
 ```bash
 source wmp/bin/activate
