@@ -19,11 +19,11 @@ This repo is a part of the data storage and processing step.
 
 ## Introduction
 
-This repo contains codes that replicate the workflow used by the Wesleyan Media Project to perform automatic speech recognition (ASR) on political ads videos.
+This repo contains codes that replicate the workflow used by the Wesleyan Media Project to perform automatic speech recognition (ASR) on political ad videos.
 
 ## Objective
 
-Each of our repos belongs to one or more of the the following categories:
+Each of our repos belongs to one or more of the following categories:
 
 - Data Collection
 - Data Storage & Processing
@@ -39,15 +39,15 @@ The data created by the scripts in this repo is in csv format.
 - An individual record of data `result_asr_g2022_raw.csv` contains the following fields:
 
   - filename: the unique identifier of the video file
-  - google_asr_text: the videos' texts recognition result from Google Cloud Speech-to-Text API
+  - google_asr_text: the videos' text recognition result from Google Cloud Speech-to-Text API
   - stt_confidence: the confidence score of the text recognition result
 
 - An individual record of cleaned data `result_asr_g2022.cvs` contains the following fields:
   - filename: the unique identifier of the video file
   - checksum_sha256: the unique SHA-256 hash of the video file
-  - google_asr_text: the videos' texts recognition result from Google Cloud Speech-to-Text API
+  - google_asr_text: the videos' text recognition result from Google Cloud Speech-to-Text API
   - google_asr_confidence: the confidence score of the text recognition result
-  - google_asr_status: the status of the text recognition result. `success` means the ASR process completed.
+  - google_asr_status: the status of the text recognition result. `success` means the ASR process is completed.
   - google_asr_model: the model we used to perform ASR.
 
 ## Setup
@@ -96,19 +96,19 @@ pip install google-cloud-speech
 
 ### Run the Scripts
 
-For the file `01_asr_g2022.py`, here is the breakdown steps of how we run it in our server:
+For the file `01_asr_g2022.py`, here are the breakdown steps of how we run it in our server:
 
-We use screen to avoid vpn connecton issue. For more information, you can check [here](https://linuxize.com/post/how-to-use-linux-screen/).
+We use the screen to avoid vpn connection issues. For more information, you can check [here](https://linuxize.com/post/how-to-use-linux-screen/).
 
-Step1: run the the following bash code on wesmedia1
-to activate google credentials:
+Step1: run the following bash code on wesmedia1
+to activate Google credentials:
 
 ```bash
 export GOOGLE_APPLICATION_CREDENTIALS="/home/jyao01/wmp/ad-media-laura.json"
 ```
 
-Step2: run the the following bash code on wesmedia1 to copy wav files to google storage.
-Notice the files need to be copyed to the 'ad_media_laura' project
+Step 2: run the the following bash code on wesmedia1 to copy wav files to Google storage.
+Notice the files need to be copied to the 'ad_media_laura' project
 
 ```bash
 gsutil -m cp -r /home/jyao01/github/google_2022/data/wav_c gs://ad_data_files/google_2022/batch_03162022
