@@ -6,17 +6,12 @@
 # export GOOGLE_APPLICATION_CREDENTIALS="/Users/bella.tassone/ServiceKeys/wmp-sandbox-f8a61d63a8e5.json"
 
 # Step 2: Run the the following bash code to copy wav files to google storage 
-# gsutil -m cp -r LOCAL_PATH_TO_WAV_FILES gs://storage_bucket_path
+# gsutil -m cp -r LOCAL_PATH_TO_WAV_FILES gs://storage_bucket_path/
 
 # Step 3 (optional): Activate an environment before running .py file
 # source wmp/bin/activate
 
-# Step 4: Make sure you have all the following imports installed
-
-# E.g.,
-# pip install sox
-# pip install tqdm
-# pip install google-cloud-speech
+# Make sure you have all the following imports installed
 
 import io
 import os
