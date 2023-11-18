@@ -1,19 +1,22 @@
-# Use screen to avoid vpn connecton issue
-# See https://linuxize.com/post/how-to-use-linux-screen/
+# Step 1: Run the the following bash code to activate google credentials:
 
-# Step1: run the the following bash code on wesmedia1 
-# to activate google credentials:
+# export GOOGLE_APPLICATION_CREDENTIALS="LOCAL_PATH_TO_SERVICE_KEY"
 
-# export GOOGLE_APPLICATION_CREDENTIALS="/home/jyao01/wmp/ad-media-laura.json"
+# E.g.,
+# export GOOGLE_APPLICATION_CREDENTIALS="/Users/bella.tassone/ServiceKeys/wmp-sandbox-f8a61d63a8e5.json"
 
-# Step2: run the the following bash code on wesmedia1
-# to copy wav files to google storage 
-# Notice the files need to be copyed to the 'ad_media_laura' project
+# Step 2: Run the the following bash code to copy wav files to google storage 
+# gsutil -m cp -r LOCAL_PATH_TO_WAV_FILES gs://storage_bucket_path
 
-# gsutil -m cp -r /home/jyao01/github/google_2022/data/wav_c gs://ad_data_files/google_2022/batch_03162022
-
-# Step3 (opitional): activate an environment before running .py file
+# Step 3 (optional): Activate an environment before running .py file
 # source wmp/bin/activate
+
+# Step 4: Make sure you have all the following imports installed
+
+# E.g.,
+# pip install sox
+# pip install tqdm
+# pip install google-cloud-speech
 
 import io
 import os
@@ -22,9 +25,10 @@ from sox import file_info
 from tqdm import tqdm
 from google.cloud import speech
 
-path_mp4 = "/home/jyao01/github/google_2022/data/mp4_c"
-path_wav = "/home/jyao01/github/google_2022/data/wav_c/"
+# To copy files from storage bucket to local (current directory) I used command:
+# gsutil cp gs://asr_demo/*.wav .
 
+path_wav = "/Users/bella.tassone/wav_files/"
 
 ## Transcribe
 # Use Google's speech-to-text API
@@ -39,8 +43,11 @@ stt_confidence = []
 # first_lang = "en-US"
 # second_lang = "es"
 
+# For each file in the given directory
 for wav in tqdm(os.listdir(path_wav)[:]):
+    # If the file ends with '.wav' (AKA is a .wav file)
     if wav.endswith(".wav"):
+        #print entire path to file
         print(path_wav+wav)
         channel = file_info.channels(path_wav+wav)
         print(channel)
@@ -48,7 +55,7 @@ for wav in tqdm(os.listdir(path_wav)[:]):
         file_name = path_wav + wav
         with io.open(file_name, 'rb') as audio_file:
             content = audio_file.read()
-        audio = speech.RecognitionAudio(uri='gs://ad_data_files/google_2022/batch_03162022/'+wav)
+        audio = speech.RecognitionAudio(uri='gs://asr_demo/'+wav)
         config = speech.RecognitionConfig(
             #encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
             #sample_rate_hertz=16000,
@@ -89,4 +96,4 @@ df['stt_confidence'] = stt_confidence
 
 df.to_csv('result_asr_g2022_raw.csv', index=False, encoding="utf-8")
 
-#os.system('say "your program has finished"')
+os.system('say "your program has finished"')

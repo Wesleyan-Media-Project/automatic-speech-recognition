@@ -100,21 +100,19 @@ For the file `01_asr_g2022.py`, here are the breakdown steps of how we run it in
 
 We use the screen to avoid vpn connection issues. For more information, you can check [here](https://linuxize.com/post/how-to-use-linux-screen/).
 
-Step1: run the following bash code on wesmedia1
-to activate Google credentials:
+Step 1: Run the following bash code to activate Google credentials, replacing `LOCAL_PATH_TO_SERVICE_KEY` with your own local path to your service key JSON:
 
 ```bash
-export GOOGLE_APPLICATION_CREDENTIALS="/home/jyao01/wmp/ad-media-laura.json"
+export GOOGLE_APPLICATION_CREDENTIALS="LOCAL_PATH_TO_SERVICE_KEY"
 ```
 
-Step 2: run the the following bash code on wesmedia1 to copy wav files to Google storage.
-Notice the files need to be copied to the 'ad_media_laura' project
+Step 2: Run the the following bash code to copy wav files to Google storage. The placeholder `LOCAL_PATH_TO_WAV_FILES` should be replaced with your local path to the wav folder, whereas `storage_bucket_path` should be replaced with the path and/or name of your Storage Bucket.
 
 ```bash
-gsutil -m cp -r /home/jyao01/github/google_2022/data/wav_c gs://ad_data_files/google_2022/batch_03162022
+gsutil -m cp -r LOCAL_PATH_TO_WAV_FILES gs://storage_bucket_path
 ```
 
-Step3 (optional): activate an environment before running .py file
+Step 3: (optional): Activate an environment before running .py file
 
 ```bash
 source wmp/bin/activate
