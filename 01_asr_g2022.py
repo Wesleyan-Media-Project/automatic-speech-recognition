@@ -1,14 +1,7 @@
-# Step 1: Run the the following bash code to activate google credentials:
-
-# export GOOGLE_APPLICATION_CREDENTIALS="LOCAL_PATH_TO_SERVICE_KEY"
-
-# E.g.,
-# export GOOGLE_APPLICATION_CREDENTIALS="/Users/bella.tassone/ServiceKeys/wmp-sandbox-f8a61d63a8e5.json"
-
-# Step 2: Run the the following bash code to copy wav files to google storage 
+# Step 1: Run the the following bash code to copy wav files to google storage 
 # gsutil -m cp -r LOCAL_PATH_TO_WAV_FILES gs://storage_bucket_path/
 
-# Step 3 (optional): Activate an environment before running .py file
+# Step 2 (optional): Activate an environment before running .py file
 # source wmp/bin/activate
 
 # Make sure you have all the following imports installed
@@ -19,6 +12,12 @@ import pandas as pd
 from sox import file_info
 from tqdm import tqdm
 from google.cloud import speech
+from google.oauth2 import service_account
+
+# Activates google credentials, replace with your own service account key file
+credentials = service_account.Credentials.from_service_account_file(
+    '/Users/bella.tassone/ServiceKeys/wmp-sandbox-f8a61d63a8e5.json',
+)
 
 # To copy files from storage bucket to local (current directory) I used command:
 # gsutil cp gs://asr_demo/*.wav .
@@ -29,7 +28,7 @@ path_wav = "/Users/bella.tassone/wav_files/"
 # Use Google's speech-to-text API
 
 # Instantiates a client
-client = speech.SpeechClient()
+client = speech.SpeechClient(credentials=credentials)
 
 video_name = []
 transcript = []
