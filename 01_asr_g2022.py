@@ -31,10 +31,6 @@ path_wav = "/Users/bella.tassone/wav_files/"
 # Instantiates a client
 client = speech.SpeechClient(credentials=credentials)
 
-video_name = []
-transcript = []
-stt_confidence = []
-
 # first_lang = "en-US"
 # second_lang = "es"
 
@@ -47,7 +43,6 @@ for wav in tqdm(os.listdir(path_wav)[:]):
         channel = file_info.channels(path_wav+wav)
         print(channel)
         curr_vid = wav.split('.')[0]
-        video_name.append(curr_vid)
         file_name = path_wav + wav
         with io.open(file_name, 'rb') as audio_file:
             content = audio_file.read()
@@ -71,7 +66,7 @@ for wav in tqdm(os.listdir(path_wav)[:]):
         print('Waiting for operation to complete...')
         # Set timeout based on the videos' length to avoid the following error
         # TimeoutError: Operation did not complete within the designated timeout.
-        response = operation.result(timeout=1000000)
+        response = operation.result()
         #print(response)
         texts = []
         confs = []
@@ -79,28 +74,36 @@ for wav in tqdm(os.listdir(path_wav)[:]):
             texts.append(result.alternatives[0].transcript)
             confs.append(result.alternatives[0].confidence)
         curr_transcript = ' '.join(texts)
-        transcript.append(curr_transcript)
         if len(confs) == 0:
-            temp = "NA"
-            curr_conf = temp
-            stt_confidence.append(curr_conf)
+            curr_conf = "NA"
         else:
             curr_conf = max(confs)
-            stt_confidence.append(curr_conf)
 
         transcript_dict = {
             'filename': curr_vid,
             'google_asr_text': curr_transcript,
             'stt_confidence': curr_conf
         }
-        with open(("./temp_jsons/" + curr_vid + ".json"), "w") as outfile:
+
+        curr_json_path = "./temp_jsons/" + curr_vid + ".json"
+        with open(curr_json_path, "w") as outfile:
             json.dump(transcript_dict, outfile)
+            
+        bq_client = bigquery.Client(project='wmp-sandbox', credentials=credentials)
+        dataset_ref = bq_client.dataset('asr_demo')
+        table_ref = dataset_ref.table('asr_test')
 
-df = pd.DataFrame()
-df['filename'] = video_name
-df['google_asr_text'] = transcript
-df['stt_confidence'] = stt_confidence
+        # Load the JSON file into BigQuery
+        job_config = bigquery.LoadJobConfig()
+        job_config.source_format = bigquery.SourceFormat.NEWLINE_DELIMITED_JSON
+        job_config.write_disposition = bigquery.WriteDisposition.WRITE_TRUNCATE
+        job_config.autodetect = True  # This allows BigQuery to automatically detect the schema
 
-df.to_csv('./Results/result_asr_g2022_raw.csv', index=False, encoding="utf-8")
+        with open(curr_json_path, "rb") as source_file:
+            job = bq_client.load_table_from_file(source_file, table_ref, job_config=job_config)
+
+        job.result()  # Wait for the job to complete
+
+        print(f"Loaded {job.output_rows} rows into asr_test")
 
 os.system('say "your program has finished"')
