@@ -8,10 +8,11 @@
 
 import io
 import os
+import json
 import pandas as pd
 from sox import file_info
 from tqdm import tqdm
-from google.cloud import speech
+from google.cloud import speech, bigquery
 from google.oauth2 import service_account
 
 # Activates google credentials, replace with your own service account key file
@@ -45,7 +46,8 @@ for wav in tqdm(os.listdir(path_wav)[:]):
         print(path_wav+wav)
         channel = file_info.channels(path_wav+wav)
         print(channel)
-        video_name.append(wav.split('.')[0])
+        curr_vid = wav.split('.')[0]
+        video_name.append(curr_vid)
         file_name = path_wav + wav
         with io.open(file_name, 'rb') as audio_file:
             content = audio_file.read()
@@ -76,18 +78,29 @@ for wav in tqdm(os.listdir(path_wav)[:]):
         for result in response.results:
             texts.append(result.alternatives[0].transcript)
             confs.append(result.alternatives[0].confidence)
-        transcript.append(' '.join(texts))
+        curr_transcript = ' '.join(texts)
+        transcript.append(curr_transcript)
         if len(confs) == 0:
             temp = "NA"
-            stt_confidence.append(temp)
+            curr_conf = temp
+            stt_confidence.append(curr_conf)
         else:
-            stt_confidence.append(max(confs))
+            curr_conf = max(confs)
+            stt_confidence.append(curr_conf)
+
+        transcript_dict = {
+            'filename': curr_vid,
+            'google_asr_text': curr_transcript,
+            'stt_confidence': curr_conf
+        }
+        with open(("./temp_jsons/" + curr_vid + ".json"), "w") as outfile:
+            json.dump(transcript_dict, outfile)
 
 df = pd.DataFrame()
 df['filename'] = video_name
 df['google_asr_text'] = transcript
 df['stt_confidence'] = stt_confidence
 
-df.to_csv('result_asr_g2022_raw.csv', index=False, encoding="utf-8")
+df.to_csv('./Results/result_asr_g2022_raw.csv', index=False, encoding="utf-8")
 
 os.system('say "your program has finished"')
