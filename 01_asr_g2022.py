@@ -25,10 +25,38 @@ credentials = service_account.Credentials.from_service_account_file(
 
 path_wav = "/Users/bella.tassone/wav_files/"
 
+# Instantiates a bq client
+bq_client = bigquery.Client(project='wmp-sandbox', credentials=credentials)
+dataset_ref = bq_client.dataset('asr_demo')
+table_ref = dataset_ref.table('asr_test')
+# query clears the table prior to populating it
+query = """
+    TRUNCATE TABLE `wmp-sandbox.asr_demo.asr_test`
+"""
+query_job = bq_client.query(query)
+
+# Alternatively, make new table for each vid (possibly does away with need to concat transcript portions?)
+
+# schema = [
+#     bigquery.SchemaField("filename", "STRING", mode="NULLABLE"),
+#     bigquery.SchemaField("google_asr_text", "STRING", mode="NULLABLE"),
+#     bigquery.SchemaField("stt_confidence", "FLOAT", mode="NULLABLE"),
+# ]
+
+#table_id = 'wmp-sandbox.asr_demo.' + curr_vid
+#table = bigquery.Table(table_id, schema=schema)
+#table = bq_client.create_table(table)
+#table_ref = dataset_ref.table(curr_vid)
+
+# bq job configuration
+job_config = bigquery.LoadJobConfig()
+job_config.source_format = bigquery.SourceFormat.NEWLINE_DELIMITED_JSON
+job_config.autodetect = True  # This allows BigQuery to automatically detect the schema
+
 ## Transcribe
 # Use Google's speech-to-text API
 
-# Instantiates a client
+# Instantiates a speech client
 client = speech.SpeechClient(credentials=credentials)
 
 # first_lang = "en-US"
@@ -88,29 +116,8 @@ for wav in tqdm(os.listdir(path_wav)[:]):
         curr_json_path = "./temp_jsons/" + curr_vid + ".json"
         with open(curr_json_path, "w") as outfile:
             json.dump(transcript_dict, outfile)
-            
-        bq_client = bigquery.Client(project='wmp-sandbox', credentials=credentials)
-        dataset_ref = bq_client.dataset('asr_demo')
-
-        schema = [
-            bigquery.SchemaField("filename", "STRING", mode="NULLABLE"),
-            bigquery.SchemaField("google_asr_text", "STRING", mode="NULLABLE"),
-            bigquery.SchemaField("stt_confidence", "FLOAT", mode="NULLABLE"),
-        ]
-
-        # Alternatively, make new table for each vid (does away with need to concat transcript portions?)
-        #table_id = 'wmp-sandbox.asr_demo.' + curr_vid
-        #table = bigquery.Table(table_id, schema=schema)
-        #table = bq_client.create_table(table)
-        #table_ref = dataset_ref.table(curr_vid)
-
-        table_ref = dataset_ref.table('asr_test')
 
         # Load the JSON file into BigQuery
-        job_config = bigquery.LoadJobConfig()
-        job_config.source_format = bigquery.SourceFormat.NEWLINE_DELIMITED_JSON
-        job_config.autodetect = True  # This allows BigQuery to automatically detect the schema
-
         with open(curr_json_path, "rb") as source_file:
             job = bq_client.load_table_from_file(source_file, table_ref, job_config=job_config)
 
