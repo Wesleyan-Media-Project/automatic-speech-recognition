@@ -91,12 +91,24 @@ for wav in tqdm(os.listdir(path_wav)[:]):
             
         bq_client = bigquery.Client(project='wmp-sandbox', credentials=credentials)
         dataset_ref = bq_client.dataset('asr_demo')
+
+        schema = [
+            bigquery.SchemaField("filename", "STRING", mode="NULLABLE"),
+            bigquery.SchemaField("google_asr_text", "STRING", mode="NULLABLE"),
+            bigquery.SchemaField("stt_confidence", "FLOAT", mode="NULLABLE"),
+        ]
+
+        # Alternatively, make new table for each vid (does away with need to concat transcript portions?)
+        #table_id = 'wmp-sandbox.asr_demo.' + curr_vid
+        #table = bigquery.Table(table_id, schema=schema)
+        #table = bq_client.create_table(table)
+        #table_ref = dataset_ref.table(curr_vid)
+
         table_ref = dataset_ref.table('asr_test')
 
         # Load the JSON file into BigQuery
         job_config = bigquery.LoadJobConfig()
         job_config.source_format = bigquery.SourceFormat.NEWLINE_DELIMITED_JSON
-        job_config.write_disposition = bigquery.WriteDisposition.WRITE_TRUNCATE
         job_config.autodetect = True  # This allows BigQuery to automatically detect the schema
 
         with open(curr_json_path, "rb") as source_file:
