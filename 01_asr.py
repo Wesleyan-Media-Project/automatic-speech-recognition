@@ -9,7 +9,6 @@
 import io
 import os
 import json
-import pandas as pd
 from sox import file_info
 from tqdm import tqdm
 from google.cloud import speech, bigquery
@@ -21,7 +20,7 @@ credentials = service_account.Credentials.from_service_account_file(
 )
 
 # To copy files from storage bucket to local (current directory) I used command:
-# gsutil cp gs://asr_demo/*.wav .
+# gsutil cp gs://asr_demo/wav_files/*.wav .
 
 path_wav = "/Users/bella.tassone/wav_files/"
 
@@ -74,7 +73,7 @@ for wav in tqdm(os.listdir(path_wav)[:]):
         file_name = path_wav + wav
         with io.open(file_name, 'rb') as audio_file:
             content = audio_file.read()
-        audio = speech.RecognitionAudio(uri='gs://asr_demo/'+wav)
+        audio = speech.RecognitionAudio(uri='gs://asr_demo/wav_files/'+wav)
         config = speech.RecognitionConfig(
             #encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
             #sample_rate_hertz=16000,
@@ -113,6 +112,7 @@ for wav in tqdm(os.listdir(path_wav)[:]):
             'stt_confidence': curr_conf
         }
 
+        # Convert results into json
         curr_json_path = "./temp_jsons/" + curr_vid + ".json"
         with open(curr_json_path, "w") as outfile:
             json.dump(transcript_dict, outfile)
