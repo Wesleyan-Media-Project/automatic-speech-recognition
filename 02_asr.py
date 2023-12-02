@@ -33,10 +33,7 @@ print(
     "Exported {}:{}.{} to {}".format(project, dataset_id, table_id, destination_uri)
 )
 
-# To copy files from storage bucket to local (current directory) use command:
-# gsutil cp gs://asr_demo/results/*.csv ./Results/
-
-# You may alternatively make a query to order columns correctly and export as csv directly from bigquery table
+# Make a query to order columns correctly and export as csv directly from bigquery table
 # Replace `wmp-sandbox.asr_demo.asr_test` with own information
 query = """
     SELECT filename, google_asr_text, stt_confidence FROM `wmp-sandbox.asr_demo.asr_test`
@@ -58,3 +55,6 @@ df['google_asr_text'] = transcripts
 df['stt_confidence'] = confs
 
 df.to_csv('./Results/asr_results_ordered.csv', index=False, encoding="utf-8")
+
+# Optional: To copy files directly from storage bucket to local (current directory) use command:
+# gsutil cp gs://asr_demo/results/*.csv ./Results/

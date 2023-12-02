@@ -36,7 +36,7 @@ This repo is part of the data storage and processing section.
 
 The data created by the scripts in this repo is in csv format.
 
-- An individual record of data `asr_results_ordered.csv` contains the following fields:
+- Individual records of data `asr_results_ordered.csv` and `gs_asr_results.csv` contains the following fields:
 
   - filename: the unique identifier of the video file
   - google_asr_text: the videos' text recognition result from Google Cloud Speech-to-Text API
@@ -100,4 +100,10 @@ Step 3: (optional): Activate an environment before running .py file
 
 ```bash
 source wmp/bin/activate
+```
+
+Step 4 (optional): After running both scripts, run the the following bash code to copy csv file from Google storage to your local. Note that the field are not in order, which is why we manually make a query in order to retrieve the results in `02_asr.py`.
+
+```bash
+gsutil cp gs://asr_demo/results/*.csv ./Results/
 ```
