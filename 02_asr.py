@@ -10,6 +10,7 @@ credentials = service_account.Credentials.from_service_account_file(
     '/Users/bella.tassone/ServiceKeys/wmp-sandbox-f8a61d63a8e5.json',
 )
 
+# Replace project, dataset, bucket, and table names with your own
 client = bigquery.Client(project='wmp-sandbox', credentials=credentials)
 bucket_name = 'asr_demo/results'
 project = "wmp-sandbox"
@@ -36,7 +37,7 @@ print(
 # gsutil cp gs://asr_demo/results/*.csv ./Results/
 
 # You may alternatively make a query to order columns correctly and export as csv directly from bigquery table
-
+# Replace `wmp-sandbox.asr_demo.asr_test` with own information
 query = """
     SELECT filename, google_asr_text, stt_confidence FROM `wmp-sandbox.asr_demo.asr_test`
 """

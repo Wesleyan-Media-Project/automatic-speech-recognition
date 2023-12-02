@@ -36,25 +36,17 @@ This repo is part of the data storage and processing section.
 
 The data created by the scripts in this repo is in csv format.
 
-- An individual record of data `result_asr_g2022_raw.csv` contains the following fields:
+- An individual record of data `asr_results_ordered.csv` contains the following fields:
 
   - filename: the unique identifier of the video file
   - google_asr_text: the videos' text recognition result from Google Cloud Speech-to-Text API
   - stt_confidence: the confidence score of the text recognition result
 
-- An individual record of cleaned data `result_asr_g2022.cvs` contains the following fields:
-  - filename: the unique identifier of the video file
-  - checksum_sha256: the unique SHA-256 hash of the video file
-  - google_asr_text: the videos' text recognition result from Google Cloud Speech-to-Text API
-  - google_asr_confidence: the confidence score of the text recognition result
-  - google_asr_status: the status of the text recognition result. `success` means the ASR process is completed.
-  - google_asr_model: the model we used to perform ASR.
-
 ## Setup
 
 ### Access Authorization
 
-The Automatic Speech Recognition (ASR) codes require Google Cloud credentials to interact with Google Cloud Storage and the Google Cloud Speech-to-Text API.
+The Automatic Speech Recognition (ASR) codes require Google Cloud credentials to interact with Google Cloud Storage, Google BigQuery, and the Google Cloud Speech-to-Text API.
 
 To run the script in this repo, you need to have your own Google Cloud credentials in the form of a JSON file.
 
@@ -75,12 +67,6 @@ Here is how you can set up the credentials:
    - Under the "Keys" tab, click "Add Key" and choose "JSON".
      This will download a JSON key file.
 
-- In code `01_asr_g2022.py`, change the path in line 7 to your own credentials file path:
-
-```
- # export GOOGLE_APPLICATION_CREDENTIALS="path/to/your_google_api_credential.json"
-```
-
 - For more information about setting up Google Cloud credentials for ASR, you can go to [this page](https://cloud.google.com/speech-to-text/docs/before-you-begin).
 
 ### Install Dependencies
@@ -92,25 +78,23 @@ pip install pandas
 pip install sox
 pip install tqdm
 pip install google-cloud-speech
+pip install google-cloud-bigquery
+pip install google-auth
 ```
 
 ### Run the Scripts
 
-For the file `01_asr_g2022.py`, here are the breakdown steps of how we run it in our server:
+For the file `01_asr.py`, here are the breakdown steps of how we run it in our server:
 
 We use the screen to avoid vpn connection issues. For more information, you can check [here](https://linuxize.com/post/how-to-use-linux-screen/).
 
-Step 1: Run the following bash code to activate Google credentials, replacing `LOCAL_PATH_TO_SERVICE_KEY` with your own local path to your service key JSON:
-
-```bash
-export GOOGLE_APPLICATION_CREDENTIALS="LOCAL_PATH_TO_SERVICE_KEY"
-```
-
-Step 2: Run the the following bash code to copy wav files to Google storage. The placeholder `LOCAL_PATH_TO_WAV_FILES` should be replaced with your local path to the wav folder, whereas `storage_bucket_path` should be replaced with the path and/or name of your Storage Bucket.
+Step 1: Run the the following bash code to copy wav files to Google storage. The placeholder `LOCAL_PATH_TO_WAV_FILES` should be replaced with your local path to the wav folder, whereas `storage_bucket_path` should be replaced with the path and/or name of your Storage Bucket.
 
 ```bash
 gsutil -m cp -r LOCAL_PATH_TO_WAV_FILES gs://storage_bucket_path
 ```
+
+Step 2: Look through the scripts and insert your own credentials/filepaths wherever it is specified. Comments should clearly indicate where this is necessary.
 
 Step 3: (optional): Activate an environment before running .py file
 

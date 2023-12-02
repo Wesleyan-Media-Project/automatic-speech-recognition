@@ -1,7 +1,11 @@
 # Step 1: Run the the following bash code to copy wav files to google storage 
+# Replace 'LOCAL_PATH_TO_WAV_FILES' and 'storage_bucket_path' with your own paths
 # gsutil -m cp -r LOCAL_PATH_TO_WAV_FILES gs://storage_bucket_path/
 
-# Step 2 (optional): Activate an environment before running .py file
+# Step 2: Replace code with your own credentials/filepaths wherever specified
+# by comments.
+
+# Step 3 (optional): Activate an environment before running .py file
 # source wmp/bin/activate
 
 # Make sure you have all the following imports installed
@@ -14,7 +18,7 @@ from tqdm import tqdm
 from google.cloud import speech, bigquery
 from google.oauth2 import service_account
 
-# Activates google credentials, replace with your own service account key file
+# Activates google credentials, replace with your own service account key file path
 credentials = service_account.Credentials.from_service_account_file(
     '/Users/bella.tassone/ServiceKeys/wmp-sandbox-f8a61d63a8e5.json',
 )
@@ -22,30 +26,19 @@ credentials = service_account.Credentials.from_service_account_file(
 # To copy files from storage bucket to local (current directory) I used command:
 # gsutil cp gs://asr_demo/wav_files/*.wav .
 
+# Replace with own local path to .wav files
 path_wav = "/Users/bella.tassone/wav_files/"
 
 # Instantiates a bq client
+# Replace project, dataset, and table names with your own
 bq_client = bigquery.Client(project='wmp-sandbox', credentials=credentials)
 dataset_ref = bq_client.dataset('asr_demo')
 table_ref = dataset_ref.table('asr_test')
-# query clears the table prior to populating it
+# query clears the table prior to populating it, replace 'wmp-sandbox.asr_demo.asr_test' with your own info
 query = """
     TRUNCATE TABLE `wmp-sandbox.asr_demo.asr_test`
 """
 query_job = bq_client.query(query)
-
-# Alternatively, make new table for each vid (possibly does away with need to concat transcript portions?)
-
-# schema = [
-#     bigquery.SchemaField("filename", "STRING", mode="NULLABLE"),
-#     bigquery.SchemaField("google_asr_text", "STRING", mode="NULLABLE"),
-#     bigquery.SchemaField("stt_confidence", "FLOAT", mode="NULLABLE"),
-# ]
-
-#table_id = 'wmp-sandbox.asr_demo.' + curr_vid
-#table = bigquery.Table(table_id, schema=schema)
-#table = bq_client.create_table(table)
-#table_ref = dataset_ref.table(curr_vid)
 
 # bq job configuration
 job_config = bigquery.LoadJobConfig()
@@ -63,9 +56,7 @@ client = speech.SpeechClient(credentials=credentials)
 
 # For each file in the given directory
 for wav in tqdm(os.listdir(path_wav)[:]):
-    # If the file ends with '.wav' (AKA is a .wav file)
     if wav.endswith(".wav"):
-        #print entire path to file
         print(path_wav+wav)
         channel = file_info.channels(path_wav+wav)
         print(channel)
@@ -73,7 +64,7 @@ for wav in tqdm(os.listdir(path_wav)[:]):
         file_name = path_wav + wav
         with io.open(file_name, 'rb') as audio_file:
             content = audio_file.read()
-        audio = speech.RecognitionAudio(uri='gs://asr_demo/wav_files/'+wav)
+        audio = speech.RecognitionAudio(uri='gs://asr_demo/wav_files/'+wav) # Replace uri with own gs path
         config = speech.RecognitionConfig(
             #encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
             #sample_rate_hertz=16000,
@@ -91,10 +82,7 @@ for wav in tqdm(os.listdir(path_wav)[:]):
         operation = client.long_running_recognize(config=config, audio=audio)
         # Detects speech in the audio file
         print('Waiting for operation to complete...')
-        # Set timeout based on the videos' length to avoid the following error
-        # TimeoutError: Operation did not complete within the designated timeout.
         response = operation.result()
-        #print(response)
         texts = []
         confs = []
         for result in response.results:
@@ -123,6 +111,6 @@ for wav in tqdm(os.listdir(path_wav)[:]):
 
         job.result()  # Wait for the job to complete
 
-        print(f"Loaded {job.output_rows} rows into asr_test")
+        print(f"Loaded {job.output_rows} rows into table")
 
 os.system('say "your program has finished"')
