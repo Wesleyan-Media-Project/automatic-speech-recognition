@@ -56,7 +56,7 @@ Here is how you can set up the credentials:
 
    - Go to the [Google Cloud Console](https://console.cloud.google.com).
    - Click the [project drop-down](https://console.cloud.google.com/projectselector2/home/dashboard) and select or create the project for which you want to add an API key.
-   - Navigate to the "API & Services" > "Library", then search for and enable the "Cloud Speech-to-Text API" and "BiqQuery API".
+   - Navigate to the "API & Services" > "Library", then search for and enable the "Cloud Speech-to-Text API" and "BigQuery API".
 
 2. Create a Service Account:
 
