@@ -100,7 +100,7 @@ for wav in tqdm(os.listdir(path_wav)[:]):
             'stt_confidence': curr_conf
         }
 
-        # Convert results into json
+        # Convert results into json, stores locally
         curr_json_path = "./temp_jsons/" + curr_vid + ".json"
         with open(curr_json_path, "w") as outfile:
             json.dump(transcript_dict, outfile)
