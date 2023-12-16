@@ -7,7 +7,7 @@ from google.oauth2 import service_account
 
 # Activates google credentials, replace with your own service account key file
 credentials = service_account.Credentials.from_service_account_file(
-    '/Users/bella.tassone/ServiceKeys/wmp-sandbox-f8a61d63a8e5.json',
+    'service-key.json',
 )
 
 # Replace project, dataset, bucket, and table names with your own
@@ -54,7 +54,7 @@ df['filename'] = vids
 df['google_asr_text'] = transcripts
 df['stt_confidence'] = confs
 
-df.to_csv('./Results/asr_results_ordered.csv', index=False, encoding="utf-8")
+df.to_csv('./Results/asr_results.csv', index=False, encoding="utf-8")
 
 # Optional: To copy files directly from storage bucket to local (current directory) use command:
 # gsutil cp gs://asr_demo/results/*.csv ./Results/

@@ -20,14 +20,14 @@ from google.oauth2 import service_account
 
 # Activates google credentials, replace with your own service account key file path
 credentials = service_account.Credentials.from_service_account_file(
-    '/Users/bella.tassone/ServiceKeys/wmp-sandbox-f8a61d63a8e5.json',
+    'service-key.json',
 )
 
 # To copy files from storage bucket to local (current directory) I used command:
 # gsutil cp gs://asr_demo/wav_files/*.wav .
 
 # Replace with own local path to .wav files
-path_wav = "/Users/bella.tassone/wav_files/"
+path_wav = "/wav_files/"
 
 # Instantiates a bq client
 # Replace project, dataset, and table names with your own
