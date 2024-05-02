@@ -20,7 +20,7 @@ To analyze the different dimensions of political ad transparency we have develop
 
 ## Overview
 
-This repo contains codes that replicate the workflow used by the Wesleyan Media Project to perform automatic speech recognition (ASR) on political ad videos.
+The scripts in this repository work to perform automatic speech recognition on political ad videos, producing a `.csv` file that contains the videos' text recognition results.
 
 ## Setup
 
@@ -82,7 +82,7 @@ Step 3: (optional): Activate an environment before running .py file
 source wmp/bin/activate
 ```
 
-Step 4 (optional): After running both scripts, run the the following bash code to copy csv file from Google storage to your local. Note that the field are not in order, which is why we manually make a query in order to retrieve the results in `02_asr.py`.
+Step 4 (optional): After running both scripts, run the the following bash code to copy csv file from Google storage to your local. Note that the fields are not in order, which is why we manually make a query in order to retrieve the results in `02_asr.py`.
 
 ```bash
 gsutil cp gs://asr_demo/results/*.csv ./Results/
@@ -90,15 +90,15 @@ gsutil cp gs://asr_demo/results/*.csv ./Results/
 
 ## Results Storage
 
-The data created by the scripts in this repo is in `csv` format.
+When you run `01_asr.py` and `02_asr.py`, the resulting data is saved in a `Results` folder. The data will be in `csv` format, entitled `asr_results.csv`.
 
-- Individual records of data `asr_results_ordered.csv` and `gs_asr_results.csv` contains the following fields:
+- Individual records of data `asr_results.csv` contains the following fields:
 
   - `filename`: the unique identifier of the video file
   - `google_asr_text`: the videos' text recognition result from Google Cloud Speech-to-Text API
   - `stt_confidence`: the confidence score of the text recognition result
 
-## 5. Thank You
+## Thank You
 
 <p align="center"><strong>We would like to thank our financial supporters!</strong></p><br>
 
