@@ -1,47 +1,26 @@
 # Wesleyan Media Project - Automatic-Speech-Recognition
 
-Welcome! This repo is part of the Cross-platform Election Advertising Transparency initiatIVE (CREATIVE) project. CREATIVE is a joint infrastructure project of WMP and privacy-tech-lab at Wesleyan University. CREATIVE provides cross-platform integration and standardization of political ads collected from Google and Facebook.
+Welcome! This repository contains codes that replicate the workflow used by the Wesleyan Media Project to perform automatic speech recognition (ASR) on political ad videos.
 
-This repo is a part of the Data Processing step.
+This repo is a part of the [Cross-platform Election Advertising Transparency Initiative (CREATIVE)](https://www.creativewmp.com/). CREATIVE has the goal of providing the public with analysis tools for more transparency of political ads across online platforms. In particular, CREATIVE provides cross-platform integration and standardization of political ads collected from Google and Facebook. CREATIVE is a joint project of the [Wesleyan Media Project (WMP)](https://mediaproject.wesleyan.edu/) and the [privacy-tech-lab](https://privacytechlab.org/) at [Wesleyan University](https://www.wesleyan.edu).
+
+To analyze the different dimensions of political ad transparency we have developed an analysis pipeline. The scripts in this repo are part of the Data Processing Step in our pipeline.
+
 ![A picture of the pipeline diagram](CREATIVE_step2_032524.png)
 
 ## Table of Contents
 
-- [Introduction](#introduction)
-
-- [Objective](#objective)
-
-- [Data](#data)
-
+- [Overview](#overview)
 - [Setup](#setup)
   - [Access Authorization](#access-authorization)
   - [Install Dependencies](#install-dependencies)
   - [Run the Scripts](#run-the-scripts)
+- [Results Storage](#results-storage)
+- [Thank You!](#thank-you)
 
-## Introduction
+## Overview
 
 This repo contains codes that replicate the workflow used by the Wesleyan Media Project to perform automatic speech recognition (ASR) on political ad videos.
-
-## Objective
-
-Each of our repos belongs to one or more of the following categories:
-
-- Data Collection
-- Data Processing
-- Data Classification
-- Compiled Final Data
-
-This repo is part of the Data Processing section.
-
-## Data
-
-The data created by the scripts in this repo is in csv format.
-
-- Individual records of data `asr_results_ordered.csv` and `gs_asr_results.csv` contains the following fields:
-
-  - filename: the unique identifier of the video file
-  - google_asr_text: the videos' text recognition result from Google Cloud Speech-to-Text API
-  - stt_confidence: the confidence score of the text recognition result
 
 ## Setup
 
@@ -108,3 +87,42 @@ Step 4 (optional): After running both scripts, run the the following bash code t
 ```bash
 gsutil cp gs://asr_demo/results/*.csv ./Results/
 ```
+
+## Results Storage
+
+The data created by the scripts in this repo is in `csv` format.
+
+- Individual records of data `asr_results_ordered.csv` and `gs_asr_results.csv` contains the following fields:
+
+  - `filename`: the unique identifier of the video file
+  - `google_asr_text`: the videos' text recognition result from Google Cloud Speech-to-Text API
+  - `stt_confidence`: the confidence score of the text recognition result
+
+## 5. Thank You
+
+<p align="center"><strong>We would like to thank our financial supporters!</strong></p><br>
+
+<p align="center">This material is based upon work supported by the National Science Foundation under Grant Numbers 2235006, 2235007, and 2235008.</p>
+
+<p align="center" style="display: flex; justify-content: center; align-items: center;">
+  <a href="https://www.nsf.gov/awardsearch/showAward?AWD_ID=2235006">
+    <img class="img-fluid" src="nsf.png" height="150px" alt="National Science Foundation Logo">
+  </a>
+</p>
+
+<p align="center">The Cross-Platform Election Advertising Transparency Initiative (CREATIVE) is a joint infrastructure project of the Wesleyan Media Project and privacy-tech-lab at Wesleyan University in Connecticut.
+
+<p align="center" style="display: flex; justify-content: center; align-items: center;">
+  <a href="https://www.creativewmp.com/">
+    <img class="img-fluid" src="CREATIVE_logo.png"  width="220px" alt="CREATIVE Logo">
+  </a>
+</p>
+
+<p align="center" style="display: flex; justify-content: center; align-items: center;">
+  <a href="https://mediaproject.wesleyan.edu/">
+    <img src="wmp-logo.png" width="218px" height="100px" alt="Wesleyan Media Project logo">
+  </a>
+</p>
+
+<p align="center" style="display: flex; justify-content: center; align-items: center;">
+  <a href="https://privacytechlab.org/" style="margin-right: 20px;">
