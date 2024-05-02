@@ -51,22 +51,33 @@ Here is how you can set up the credentials:
 
 ### Install Dependencies
 
-To run the scripts in this repo, you need to install the following dependencies:
+We recommend creating and activating a virtual python environment before running the .py scripts:
 
 ```bash
-pip install pandas
-pip install sox
-pip install tqdm
-pip install google-cloud-speech
-pip install google-cloud-bigquery
-pip install google-auth
+python3 -m venv venv
+source venv/bin/activate
+```
+
+Deactive the environment with this command:
+
+```bash
+deactivate
+```
+
+Additionally, to run the scripts in this repo, you need to install the following dependencies:
+
+```bash
+pip3 install pandas
+pip3 install sox
+pip3 install tqdm
+pip3 install google-cloud-speech
+pip3 install google-cloud-bigquery
+pip3 install google-auth
 ```
 
 ### Run the Scripts
 
 For the file `01_asr.py`, here are the breakdown steps of how we run it in our server:
-
-We use the screen to avoid vpn connection issues. For more information, you can check [here](https://linuxize.com/post/how-to-use-linux-screen/).
 
 Step 1: Run the the following bash code to copy wav files to Google storage. The placeholder `LOCAL_PATH_TO_WAV_FILES` should be replaced with your local path to the wav folder, whereas `storage_bucket_path` should be replaced with the path and/or name of your Storage Bucket.
 
@@ -76,10 +87,11 @@ gsutil -m cp -r LOCAL_PATH_TO_WAV_FILES gs://storage_bucket_path
 
 Step 2: Look through the scripts and insert your own credentials/filepaths wherever it is specified. Comments should clearly indicate where this is necessary.
 
-Step 3: (optional): Activate an environment before running .py file
+Step 3: Run the scripts in order:
 
 ```bash
-source wmp/bin/activate
+python3 01_asr.py
+python3 02_asr.py
 ```
 
 Step 4 (optional): After running both scripts, run the the following bash code to copy csv file from Google storage to your local. Note that the fields are not in order, which is why we manually make a query in order to retrieve the results in `02_asr.py`.
