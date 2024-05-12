@@ -10,19 +10,19 @@ To analyze the different dimensions of political ad transparency we have develop
 
 ## Table of Contents
 
-- [Overview](#overview)
-- [Setup](#setup)
+- [1. Overview](#1-overview)
+- [2. Setup](#2-setup)
   - [Access Authorization](#access-authorization)
   - [Install Dependencies](#install-dependencies)
   - [Run the Scripts](#run-the-scripts)
-- [Results Storage](#results-storage)
-- [Thank You!](#thank-you)
+- [3. Results Storage](#3-results-storage)
+- [4. Thank You!](#4-thank-you)
 
-## Overview
+## 1. Overview
 
 The scripts in this repository work to perform automatic speech recognition on political ad videos, producing a `.csv` file that contains the videos' text recognition results.
 
-## Setup
+## 2. Setup
 
 ### Access Authorization
 
@@ -79,28 +79,28 @@ pip3 install google-auth
 
 For the files `01_asr.py` and `02_asr.py`, here are the breakdown steps of how we run it in our server:
 
-Step 1: Run the the following bash code to copy wav files to Google storage. The placeholder `LOCAL_PATH_TO_WAV_FILES` should be replaced with your local path to the wav folder, whereas `storage_bucket_path` should be replaced with the path and/or name of your Storage Bucket.
+1. Run the the following bash code to copy wav files to Google storage. The placeholder `LOCAL_PATH_TO_WAV_FILES` should be replaced with your local path to the wav folder, whereas `storage_bucket_path` should be replaced with the path and/or name of your Storage Bucket.
 
 ```bash
 gsutil -m cp -r LOCAL_PATH_TO_WAV_FILES gs://storage_bucket_path
 ```
 
-Step 2: Look through the scripts and insert your own credentials/filepaths wherever it is specified. Comments should clearly indicate where this is necessary.
+2. Look through the scripts and insert your own credentials/filepaths wherever it is specified. Comments should clearly indicate where this is necessary.
 
-Step 3: Run the scripts in order:
+3. Run the scripts in order:
 
 ```bash
 python3 01_asr.py
 python3 02_asr.py
 ```
 
-Step 4 (optional): After running both scripts, run the the following bash code to copy csv file from Google storage to your local. Note that the fields are not in order, which is why we manually make a query in order to retrieve the results in `02_asr.py`.
+4. (Optional) After running both scripts, run the the following bash code to copy csv file from Google storage to your local. Note that the fields are not in order, which is why we manually make a query in order to retrieve the results in `02_asr.py`.
 
 ```bash
 gsutil cp gs://asr_demo/results/*.csv ./Results/
 ```
 
-## Results Storage
+## 3. Results Storage
 
 When you run `01_asr.py` and `02_asr.py`, the resulting data is saved in a `Results` folder. The data will be in `csv` format, entitled `asr_results.csv`.
 
@@ -110,7 +110,7 @@ When you run `01_asr.py` and `02_asr.py`, the resulting data is saved in a `Resu
   - `google_asr_text`: the videos' text recognition result from Google Cloud Speech-to-Text API
   - `stt_confidence`: the confidence score of the text recognition result
 
-## Thank You
+## 4. Thank You
 
 <p align="center"><strong>We would like to thank our financial supporters!</strong></p><br>
 
