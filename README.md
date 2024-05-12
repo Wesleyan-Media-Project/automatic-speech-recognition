@@ -1,4 +1,4 @@
-# Wesleyan Media Project - Automatic-Speech-Recognition
+# Wesleyan Media Project - Automatic Speech Recognition
 
 Welcome! This repository contains codes that replicate the workflow used by the Wesleyan Media Project to perform automatic speech recognition (ASR) on political ad videos.
 
