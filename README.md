@@ -1,49 +1,28 @@
-# Wesleyan Media Project - Automatic-Speech-Recognition
+# Wesleyan Media Project - Automatic Speech Recognition
 
-Welcome! This repo is part of the Cross-platform Election Advertising Transparency initiatIVE (CREATIVE) project. CREATIVE is a joint infrastructure project of WMP and privacy-tech-lab at Wesleyan University. CREATIVE provides cross-platform integration and standardization of political ads collected from Google and Facebook.
+Welcome! This repository contains codes that replicate the workflow used by the Wesleyan Media Project to perform automatic speech recognition (ASR) on political ad videos.
 
-This repo is a part of the Data Processing step.
+This repo is a part of the [Cross-platform Election Advertising Transparency Initiative (CREATIVE)](https://www.creativewmp.com/). CREATIVE has the goal of providing the public with analysis tools for more transparency of political ads across online platforms. In particular, CREATIVE provides cross-platform integration and standardization of political ads collected from Google and Facebook. CREATIVE is a joint project of the [Wesleyan Media Project (WMP)](https://mediaproject.wesleyan.edu/) and the [privacy-tech-lab](https://privacytechlab.org/) at [Wesleyan University](https://www.wesleyan.edu).
+
+To analyze the different dimensions of political ad transparency we have developed an analysis pipeline. The scripts in this repo are part of the Data Processing Step in our pipeline.
+
 ![A picture of the pipeline diagram](CREATIVE_step2_032524.png)
 
 ## Table of Contents
 
-- [Introduction](#introduction)
-
-- [Objective](#objective)
-
-- [Data](#data)
-
-- [Setup](#setup)
+- [1. Overview](#1-overview)
+- [2. Setup](#2-setup)
   - [Access Authorization](#access-authorization)
   - [Install Dependencies](#install-dependencies)
   - [Run the Scripts](#run-the-scripts)
+- [3. Results Storage](#3-results-storage)
+- [4. Thank You!](#4-thank-you)
 
-## Introduction
+## 1. Overview
 
-This repo contains codes that replicate the workflow used by the Wesleyan Media Project to perform automatic speech recognition (ASR) on political ad videos.
+The scripts in this repository work to perform automatic speech recognition on political ad videos, producing a `.csv` file that contains the videos' text recognition results.
 
-## Objective
-
-Each of our repos belongs to one or more of the following categories:
-
-- Data Collection
-- Data Processing
-- Data Classification
-- Compiled Final Data
-
-This repo is part of the Data Processing section.
-
-## Data
-
-The data created by the scripts in this repo is in csv format.
-
-- Individual records of data `asr_results_ordered.csv` and `gs_asr_results.csv` contains the following fields:
-
-  - filename: the unique identifier of the video file
-  - google_asr_text: the videos' text recognition result from Google Cloud Speech-to-Text API
-  - stt_confidence: the confidence score of the text recognition result
-
-## Setup
+## 2. Setup
 
 ### Access Authorization
 
@@ -72,39 +51,90 @@ Here is how you can set up the credentials:
 
 ### Install Dependencies
 
-To run the scripts in this repo, you need to install the following dependencies:
+We recommend creating and activating a virtual python environment before running the .py scripts:
 
 ```bash
-pip install pandas
-pip install sox
-pip install tqdm
-pip install google-cloud-speech
-pip install google-cloud-bigquery
-pip install google-auth
+python3 -m venv venv
+source venv/bin/activate
+```
+
+Deactive the environment with this command:
+
+```bash
+deactivate
+```
+
+Additionally, to run the scripts in this repo, you need to install the following dependencies:
+
+```bash
+pip3 install pandas
+pip3 install sox
+pip3 install tqdm
+pip3 install google-cloud-speech
+pip3 install google-cloud-bigquery
+pip3 install google-auth
 ```
 
 ### Run the Scripts
 
-For the file `01_asr.py`, here are the breakdown steps of how we run it in our server:
+For the files `01_asr.py` and `02_asr.py`, here are the breakdown steps of how we run it in our server:
 
-We use the screen to avoid vpn connection issues. For more information, you can check [here](https://linuxize.com/post/how-to-use-linux-screen/).
-
-Step 1: Run the the following bash code to copy wav files to Google storage. The placeholder `LOCAL_PATH_TO_WAV_FILES` should be replaced with your local path to the wav folder, whereas `storage_bucket_path` should be replaced with the path and/or name of your Storage Bucket.
+1. Run the the following bash code to copy wav files to Google storage. The placeholder `LOCAL_PATH_TO_WAV_FILES` should be replaced with your local path to the wav folder, whereas `storage_bucket_path` should be replaced with the path and/or name of your Storage Bucket.
 
 ```bash
 gsutil -m cp -r LOCAL_PATH_TO_WAV_FILES gs://storage_bucket_path
 ```
 
-Step 2: Look through the scripts and insert your own credentials/filepaths wherever it is specified. Comments should clearly indicate where this is necessary.
+2. Look through the scripts and insert your own credentials/filepaths wherever it is specified. Comments should clearly indicate where this is necessary.
 
-Step 3: (optional): Activate an environment before running .py file
+3. Run the scripts in order:
 
 ```bash
-source wmp/bin/activate
+python3 01_asr.py
+python3 02_asr.py
 ```
 
-Step 4 (optional): After running both scripts, run the the following bash code to copy csv file from Google storage to your local. Note that the field are not in order, which is why we manually make a query in order to retrieve the results in `02_asr.py`.
+4. (Optional) After running both scripts, run the the following bash code to copy csv file from Google storage to your local. Note that the fields are not in order, which is why we manually make a query in order to retrieve the results in `02_asr.py`.
 
 ```bash
 gsutil cp gs://asr_demo/results/*.csv ./Results/
 ```
+
+## 3. Results Storage
+
+When you run `01_asr.py` and `02_asr.py`, the resulting data is saved in a `Results` folder. The data will be in `csv` format, entitled `asr_results.csv`.
+
+- Individual records of data `asr_results.csv` contains the following fields:
+
+  - `filename`: the unique identifier of the video file
+  - `google_asr_text`: the videos' text recognition result from Google Cloud Speech-to-Text API
+  - `stt_confidence`: the confidence score of the text recognition result
+
+## 4. Thank You
+
+<p align="center"><strong>We would like to thank our financial supporters!</strong></p><br>
+
+<p align="center">This material is based upon work supported by the National Science Foundation under Grant Numbers 2235006, 2235007, and 2235008.</p>
+
+<p align="center" style="display: flex; justify-content: center; align-items: center;">
+  <a href="https://www.nsf.gov/awardsearch/showAward?AWD_ID=2235006">
+    <img class="img-fluid" src="nsf.png" height="150px" alt="National Science Foundation Logo">
+  </a>
+</p>
+
+<p align="center">The Cross-Platform Election Advertising Transparency Initiative (CREATIVE) is a joint infrastructure project of the Wesleyan Media Project and privacy-tech-lab at Wesleyan University in Connecticut.
+
+<p align="center" style="display: flex; justify-content: center; align-items: center;">
+  <a href="https://www.creativewmp.com/">
+    <img class="img-fluid" src="CREATIVE_logo.png"  width="220px" alt="CREATIVE Logo">
+  </a>
+</p>
+
+<p align="center" style="display: flex; justify-content: center; align-items: center;">
+  <a href="https://mediaproject.wesleyan.edu/">
+    <img src="wmp-logo.png" width="218px" height="100px" alt="Wesleyan Media Project logo">
+  </a>
+</p>
+
+<p align="center" style="display: flex; justify-content: center; align-items: center;">
+  <a href="https://privacytechlab.org/" style="margin-right: 20px;">
