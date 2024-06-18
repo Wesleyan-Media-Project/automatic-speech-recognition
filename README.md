@@ -53,6 +53,26 @@ Here is how you can set up the credentials:
 
 ### 2.2 Install Dependencies
 
+In order to copy files between your local drive and Google Storage, you need to install the `gsutil` tool, which can be achieved by installing the Google Cloud CLI. Instructions on how to do so (including the package that must be downloaded) is found [here](https://cloud.google.com/storage/docs/gsutil_install). 
+
+Then, in order to authorize the gcloud CLI using a service account key, run the following command, where `KEY_FILE` is replaced with the full path to your service account key file ([source](https://cloud.google.com/sdk/docs/authorizing)):
+
+```bash
+gcloud auth login --cred-file=KEY_FILE
+```
+
+You can double-check the list of accounts whose credentials are stored on the local system using the command:
+
+```bash
+gcloud auth list
+```
+
+and switch the active account by running the command below, where `ACCOUNT` is the full email address of the account:
+
+```bash
+gcloud config set account ACCOUNT
+```
+
 We recommend creating and activating a Python virtual environment before running the .py scripts:
 
 ```bash
@@ -81,7 +101,7 @@ pip3 install google-auth
 
 Here is how we run the files `01_asr.py` and `02_asr.py`:
 
-1. Run the following bash code to copy wav files to Google storage. If you have not yet created a Cloud Storage Bucket within your Google Cloud project, you can do so easily by following [these instructions](https://cloud.google.com/storage/docs/creating-buckets). The placeholder `LOCAL_PATH_TO_WAV_FILES` should be replaced with your local path to the wav folder, whereas `storage_bucket_path` should be replaced with the path and/or name of your Storage Bucket.
+1. Run the following bash code to copy wav files to Google Storage. If you have not yet created a Cloud Storage Bucket within your Google Cloud project, you can do so easily by following [these instructions](https://cloud.google.com/storage/docs/creating-buckets). The placeholder `LOCAL_PATH_TO_WAV_FILES` should be replaced with your local path to the wav folder, whereas `storage_bucket_path` should be replaced with the path and/or name of your Storage Bucket.
 
    ```bash
    gsutil -m cp -r LOCAL_PATH_TO_WAV_FILES gs://storage_bucket_path
