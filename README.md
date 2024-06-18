@@ -1,4 +1,4 @@
-# Wesleyan Media Project - Automatic Speech Recognition
+# CREATIVE --- Automatic Speech Recognition
 
 Welcome! This repo contains scripts for performing automatic speech recognition (ASR) on political ad videos.
 
