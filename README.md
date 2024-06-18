@@ -79,9 +79,9 @@ pip3 install google-auth
 
 ### 2.3 Run the Scripts
 
-For the files `01_asr.py` and `02_asr.py`, here are the steps of how we run it in our server:
+Here is how we run the files `01_asr.py` and `02_asr.py`:
 
-1. Run the following bash code to copy wav files to Google storage. The placeholder `LOCAL_PATH_TO_WAV_FILES` should be replaced with your local path to the wav folder, whereas `storage_bucket_path` should be replaced with the path and/or name of your Storage Bucket.
+1. Run the following bash code to copy wav files to Google storage. If you have not yet created a Cloud Storage Bucket within your Google Cloud project, you can do so easily by following [these instructions](https://cloud.google.com/storage/docs/creating-buckets). The placeholder `LOCAL_PATH_TO_WAV_FILES` should be replaced with your local path to the wav folder, whereas `storage_bucket_path` should be replaced with the path and/or name of your Storage Bucket.
 
    ```bash
    gsutil -m cp -r LOCAL_PATH_TO_WAV_FILES gs://storage_bucket_path
