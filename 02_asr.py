@@ -1,6 +1,7 @@
 # for downloading data to google storage bucket as a csv
 # https://cloud.google.com/bigquery/docs/samples/bigquery-extract-table
 
+import os
 import pandas as pd
 from google.cloud import bigquery
 from google.oauth2 import service_account
@@ -54,6 +55,9 @@ df['filename'] = vids
 df['google_asr_text'] = transcripts
 df['stt_confidence'] = confs
 
+# Replace "current_path" with the full path to the automatic-speech-recognition folder in your local
+directory = os.path.join("current_path", "Results")
+os.makedirs(directory, exist_ok=True)
 df.to_csv('./Results/asr_results.csv', index=False, encoding="utf-8")
 
 # Optional: To copy files directly from storage bucket to local (current directory) use command:

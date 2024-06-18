@@ -100,7 +100,10 @@ for wav in tqdm(os.listdir(path_wav)[:]):
             'stt_confidence': curr_conf
         }
 
-        # Convert results into json, stores locally
+        # Convert results into json, stores locally in new temp_jsons folder
+        # Replace "current_path" with the full path to the automatic-speech-recognition folder in your local
+        directory = os.path.join("current_path", "temp_jsons")
+        os.makedirs(directory, exist_ok=True)
         curr_json_path = "./temp_jsons/" + curr_vid + ".json"
         with open(curr_json_path, "w") as outfile:
             json.dump(transcript_dict, outfile)
