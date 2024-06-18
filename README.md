@@ -1,6 +1,6 @@
 # Wesleyan Media Project - Automatic Speech Recognition
 
-Welcome! This repository contains codes that replicate the workflow used by the Wesleyan Media Project to perform automatic speech recognition (ASR) on political ad videos.
+Welcome! This repo contains scripts for performing automatic speech recognition (ASR) on political ad videos.
 
 This repo is a part of the [Cross-platform Election Advertising Transparency Initiative (CREATIVE)](https://www.creativewmp.com/). CREATIVE has the goal of providing the public with analysis tools for more transparency of political ads across online platforms. In particular, CREATIVE provides cross-platform integration and standardization of political ads collected from Google and Facebook. CREATIVE is a joint project of the [Wesleyan Media Project (WMP)](https://mediaproject.wesleyan.edu/) and the [privacy-tech-lab](https://privacytechlab.org/) at [Wesleyan University](https://www.wesleyan.edu).
 
@@ -12,9 +12,9 @@ To analyze the different dimensions of political ad transparency we have develop
 
 - [1. Overview](#1-overview)
 - [2. Setup](#2-setup)
-  - [Access Authorization](#access-authorization)
-  - [Install Dependencies](#install-dependencies)
-  - [Run the Scripts](#run-the-scripts)
+  - [2.1 Access Authorization](#21-access-authorization)
+  - [2.2 Install Dependencies](#22-install-dependencies)
+  - [2.3 Run the Scripts](#23-run-the-scripts)
 - [3. Results Storage](#3-results-storage)
 - [4. Thank You!](#4-thank-you)
 
@@ -24,13 +24,15 @@ The scripts in this repository work to perform automatic speech recognition on p
 
 ## 2. Setup
 
-### Access Authorization
+### 2.1 Access Authorization
 
 The Automatic Speech Recognition (ASR) codes require Google Cloud credentials to interact with Google Cloud Storage, Google BigQuery, and the Google Cloud Speech-to-Text API.
 
 To run the script in this repo, you need to have your own Google Cloud credentials in the form of a JSON file.
 
 Here is how you can set up the credentials:
+
+0. If you have not done it yet, register with [Google Cloud Platform (GCP)](https://cloud.google.com/) and create a project.
 
 1. Set up your Google Cloud project for Speech-to-Text
 
@@ -47,18 +49,18 @@ Here is how you can set up the credentials:
    - Under the "Keys" tab, click "Add Key" and choose "JSON".
      This will download a JSON key file.
 
-- For more information about setting up Google Cloud credentials for ASR, you can go to [this page](https://cloud.google.com/speech-to-text/docs/before-you-begin).
+- For more information about setting up Google Cloud credentials for ASR, you can go to [Google's ASR documentation](https://cloud.google.com/speech-to-text/docs/before-you-begin).
 
-### Install Dependencies
+### 2.2 Install Dependencies
 
-We recommend creating and activating a virtual python environment before running the .py scripts:
+We recommend creating and activating a Python virtual environment before running the .py scripts:
 
 ```bash
 python3 -m venv venv
 source venv/bin/activate
 ```
 
-Deactive the environment with this command:
+If you want to stop the virtual environment at some point, you can deactivate it:
 
 ```bash
 deactivate
@@ -75,36 +77,36 @@ pip3 install google-cloud-bigquery
 pip3 install google-auth
 ```
 
-### Run the Scripts
+### 2.3 Run the Scripts
 
-For the files `01_asr.py` and `02_asr.py`, here are the breakdown steps of how we run it in our server:
+For the files `01_asr.py` and `02_asr.py`, here are the steps of how we run it in our server:
 
-1. Run the the following bash code to copy wav files to Google storage. The placeholder `LOCAL_PATH_TO_WAV_FILES` should be replaced with your local path to the wav folder, whereas `storage_bucket_path` should be replaced with the path and/or name of your Storage Bucket.
+1. Run the following bash code to copy wav files to Google storage. The placeholder `LOCAL_PATH_TO_WAV_FILES` should be replaced with your local path to the wav folder, whereas `storage_bucket_path` should be replaced with the path and/or name of your Storage Bucket.
 
-```bash
-gsutil -m cp -r LOCAL_PATH_TO_WAV_FILES gs://storage_bucket_path
-```
+   ```bash
+   gsutil -m cp -r LOCAL_PATH_TO_WAV_FILES gs://storage_bucket_path
+   ```
 
-2. Look through the scripts and insert your own credentials/filepaths wherever it is specified. Comments should clearly indicate where this is necessary.
+2. Look through the scripts and insert your own credentials/filepaths wherever it is specified. Comments in the code indicate where this is necessary.
 
 3. Run the scripts in order:
 
-```bash
-python3 01_asr.py
-python3 02_asr.py
-```
+   ```bash
+   python3 01_asr.py
+   python3 02_asr.py
+   ```
 
-4. (Optional) After running both scripts, run the the following bash code to copy csv file from Google storage to your local. Note that the fields are not in order, which is why we manually make a query in order to retrieve the results in `02_asr.py`.
+4. (Optional) After running both scripts, run the the following bash code to copy the csv file from Google storage to your local storage. Note that the fields are not in order, which is why we manually make a query in order to retrieve the results in `02_asr.py`.
 
-```bash
-gsutil cp gs://asr_demo/results/*.csv ./Results/
-```
+   ```bash
+   gsutil cp gs://asr_demo/results/*.csv ./Results/
+   ```
 
 ## 3. Results Storage
 
 When you run `01_asr.py` and `02_asr.py`, the resulting data is saved in a `Results` folder. The data will be in `csv` format, entitled `asr_results.csv`.
 
-- Individual records of data `asr_results.csv` contains the following fields:
+- Individual records of data `asr_results.csv` contain the following fields:
 
   - `filename`: the unique identifier of the video file
   - `google_asr_text`: the videos' text recognition result from Google Cloud Speech-to-Text API
@@ -112,7 +114,7 @@ When you run `01_asr.py` and `02_asr.py`, the resulting data is saved in a `Resu
 
 ## 4. Thank You
 
-<p align="center"><strong>We would like to thank our financial supporters!</strong></p><br>
+<p align="center"><strong>We would like to thank our supporters!</strong></p><br>
 
 <p align="center">This material is based upon work supported by the National Science Foundation under Grant Numbers 2235006, 2235007, and 2235008.</p>
 
