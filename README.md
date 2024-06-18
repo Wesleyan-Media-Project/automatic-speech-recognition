@@ -55,6 +55,8 @@ Here is how you can set up the credentials:
 
 In order to copy files between your local drive and Google Storage, you need to install the `gsutil` tool, which can be achieved by installing the Google Cloud CLI. Instructions on how to do so (including the package that must be downloaded) is found [here](https://cloud.google.com/storage/docs/gsutil_install). 
 
+**NOTE**: If you are receiving the error `gcloud: command not found`, try opening a new terminal window in order to have your changes take effect.
+
 Then, in order to authorize the gcloud CLI using a service account key, run the following command, where `KEY_FILE` is replaced with the full path to your service account key file ([source](https://cloud.google.com/sdk/docs/authorizing)):
 
 ```bash
