@@ -156,7 +156,7 @@ Here is how we run the files `01_asr.py` and `02_asr.py`:
 
 ## 3. Results Storage
 
-When you run `01_asr.py` and `02_asr.py`, the resulting data is saved in a `Results` folder. The data will be in `csv` format, entitled `asr_results.csv`.
+When you run `01_asr.py` and `02_asr.py`, the resulting data is saved in a `Results` folder located in your local `automatic-speech-recognition` folder if you ran step 4 in the previous section and in your Storage Bucket. The data will be in `csv` format, entitled `asr_results.csv` or `gs_asr_results.csv` depending on whether it is stored locally or in the Storage Bucket.
 
 - Individual records of data `asr_results.csv` contain the following fields:
 
