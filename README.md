@@ -54,7 +54,34 @@ Here is how you can set up the credentials:
 - For more information about setting up Google Cloud credentials for ASR, you can go to [Google's ASR documentation](https://cloud.google.com/speech-to-text/docs/before-you-begin).
 - **NOTE**: If you are on a restricted Google account, such as a school account, that prevents you from creating a Google Cloud project, you will need to use a different account.
 
-### 2.2 Install Dependencies
+### 2.2 Project Setup
+
+The ASR codes require a dataset and table within your project. Instructions on how to create a dataset is found [here](https://cloud.google.com/bigquery/docs/datasets), and instructions on how to create a table is found [here](https://cloud.google.com/bigquery/docs/tables).
+
+The ASR codes also require that you grant your service account permissions.
+
+The list of permissions include:
+
+- "BigQuery Admin"
+- "BigQuery User"
+- "Storage Object Creator"
+- "Storage Object Viewer"
+
+Here is how can grant the permissions:
+
+1. In the Cloud Console, click the navigation menu and select "IAM & Admin".
+
+2. Click "IAM" on the left side panel.
+
+3. Under the "VIEW BY PRINCIPALS" tab, click "+ GRANT ACCESS".
+
+4. Under "Add principals", enter the service account.
+
+5. Under "Assign roles", add each of the permissions listed above.
+
+6. Click "Save".
+
+### 2.3 Install Dependencies
 
 In order to copy files between your local drive and Google Storage, you need to install the `gsutil` tool, which can be achieved by installing the Google Cloud CLI. Instructions on how to do so (including the package that must be downloaded) is found [here](https://cloud.google.com/storage/docs/gsutil_install).
 
@@ -102,7 +129,7 @@ pip3 install google-cloud-bigquery
 pip3 install google-auth
 ```
 
-### 2.3 Run the Scripts
+### 2.4 Run the Scripts
 
 Here is how we run the files `01_asr.py` and `02_asr.py`:
 
