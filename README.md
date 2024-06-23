@@ -149,7 +149,7 @@ Here is how we run the files `01_asr.py` and `02_asr.py`:
    python3 02_asr.py
    ```
 
-4. (Optional) After running both scripts, run the the following bash code to copy the csv file from Google storage to your local storage. The placeholder `asr_demo` should be replaced with the path and/or name of your Storage Bucket. Note that the fields are not in order, which is why we manually make a query in order to retrieve the results in `02_asr.py`.
+4. (Optional) After running both scripts, run the the following bash code if you wish to copy the csv file directly from Google storage to your local storage. The placeholder `asr_demo` should be replaced with the path and/or name of your Storage Bucket. Note that the fields of the `csv` that is retrieved using this command are not in order, which is why  in `02_asr.py` we choose to manually make a query in order to retrieve the results.
 
    ```bash
    gsutil cp gs://asr_demo/results/*.csv ./Results/
@@ -157,7 +157,7 @@ Here is how we run the files `01_asr.py` and `02_asr.py`:
 
 ## 3. Results Storage
 
-When you run `01_asr.py` and `02_asr.py`, the resulting data is saved in a `Results` folder located in your local `automatic-speech-recognition` folder if you ran step 4 in the previous section and in your Storage Bucket. The data will be in `csv` format, entitled `asr_results.csv` or `gs_asr_results.csv` depending on whether it is stored locally or in the Storage Bucket.
+When you run `01_asr.py` and `02_asr.py`, the resulting data is saved in two locations: a `Results` folder located in your local `automatic-speech-recognition`, and a `results` folder located in your chosen Storage Bucket. The data will be in `csv` format, entitled `asr_results.csv` in your local and `gs_asr_results.csv` in the Storage Bucket.
 
 - Individual records of data `asr_results.csv` contain the following fields:
 
