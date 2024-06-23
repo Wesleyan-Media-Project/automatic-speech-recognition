@@ -108,7 +108,7 @@ for wav in tqdm(os.listdir(path_wav)[:]):
         curr_json_path = "./temp_jsons/" + curr_vid + ".json"
         with open(curr_json_path, "w") as outfile:
             json.dump(transcript_dict, outfile)
-        print(curr_json_path + " saved to temp_jsons folder in local.")
+        print(curr_vid + ".json saved to temp_jsons folder in local.")
 
         # Load the JSON file into BigQuery
         with open(curr_json_path, "rb") as source_file:
