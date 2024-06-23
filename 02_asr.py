@@ -6,12 +6,13 @@ import pandas as pd
 from google.cloud import bigquery
 from google.oauth2 import service_account
 
-# Activates google credentials, replace with your own service account key file
+# Activates google credentials
+# TODO: Replace with your own service account key file
 credentials = service_account.Credentials.from_service_account_file(
     'service-key.json',
 )
 
-# Replace project, dataset, bucket, and table names with your own
+# TODO: Replace project, dataset, bucket, and table names with your own
 client = bigquery.Client(project='wmp-sandbox', credentials=credentials)
 bucket_name = 'asr_demo/results'
 project = "wmp-sandbox"
@@ -35,7 +36,7 @@ print(
 )
 
 # Make a query to order columns correctly and export as csv directly from bigquery table
-# Replace `wmp-sandbox.asr_demo.asr_test` with own information
+# TODO: Replace `wmp-sandbox.asr_demo.asr_test` with own information
 query = """
     SELECT filename, google_asr_text, stt_confidence FROM `wmp-sandbox.asr_demo.asr_test`
 """
@@ -55,10 +56,10 @@ df['filename'] = vids
 df['google_asr_text'] = transcripts
 df['stt_confidence'] = confs
 
-# Replace "current_path" with the full path to the automatic-speech-recognition folder in your local
+# TODO: Replace "current_path" with the full path to the automatic-speech-recognition folder in your local
 directory = os.path.join("current_path", "Results")
 os.makedirs(directory, exist_ok=True)
 df.to_csv('./Results/asr_results.csv', index=False, encoding="utf-8")
-
-# Optional: To copy files directly from storage bucket to local (current directory) use command:
+print("asr_results.csv saved to Results folder in local.")
+# Optional: Alternatively, to copy files directly from storage bucket to local (current directory) use command:
 # gsutil cp gs://asr_demo/results/*.csv ./Results/

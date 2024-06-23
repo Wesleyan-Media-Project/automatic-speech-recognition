@@ -18,7 +18,8 @@ from tqdm import tqdm
 from google.cloud import speech, bigquery
 from google.oauth2 import service_account
 
-# Activates google credentials, replace with your own service account key file path
+# Activates google credentials
+# TODO: Replace with your own service account key file path
 credentials = service_account.Credentials.from_service_account_file(
     'service-key.json',
 )
@@ -26,11 +27,11 @@ credentials = service_account.Credentials.from_service_account_file(
 # To copy files from storage bucket to local (current directory) I used command:
 # gsutil cp gs://asr_demo/wav_files/*.wav .
 
-# Replace with own local path to .wav files
+# TODO: Replace with own local path to .wav files
 path_wav = "/wav_files/"
 
 # Instantiates a bq client
-# Replace project, dataset, and table names with your own
+# TODO: Replace project, dataset, and table names with your own
 bq_client = bigquery.Client(project='wmp-sandbox', credentials=credentials)
 dataset_ref = bq_client.dataset('asr_demo')
 table_ref = dataset_ref.table('asr_test')
@@ -59,12 +60,12 @@ for wav in tqdm(os.listdir(path_wav)[:]):
     if wav.endswith(".wav"):
         print(path_wav+wav)
         channel = file_info.channels(path_wav+wav)
-        print(channel)
+        #print(channel)
         curr_vid = wav.split('.')[0]
         file_name = path_wav + wav
         with io.open(file_name, 'rb') as audio_file:
             content = audio_file.read()
-        audio = speech.RecognitionAudio(uri='gs://asr_demo/wav_files/'+wav) # Replace uri with own gs path
+        audio = speech.RecognitionAudio(uri='gs://asr_demo/wav_files/'+wav) # TODO: Replace uri with own gs path
         config = speech.RecognitionConfig(
             #encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
             #sample_rate_hertz=16000,
@@ -101,12 +102,13 @@ for wav in tqdm(os.listdir(path_wav)[:]):
         }
 
         # Convert results into json, stores locally in new temp_jsons folder
-        # Replace "current_path" with the full path to the automatic-speech-recognition folder in your local
+        # TODO: Replace "current_path" with the full path to the automatic-speech-recognition folder in your local
         directory = os.path.join("current_path", "temp_jsons")
         os.makedirs(directory, exist_ok=True)
         curr_json_path = "./temp_jsons/" + curr_vid + ".json"
         with open(curr_json_path, "w") as outfile:
             json.dump(transcript_dict, outfile)
+        print(curr_json_path + " saved to temp_jsons folder in local.")
 
         # Load the JSON file into BigQuery
         with open(curr_json_path, "rb") as source_file:
