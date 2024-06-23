@@ -13,8 +13,9 @@ To analyze the different dimensions of political ad transparency we have develop
 - [1. Overview](#1-overview)
 - [2. Setup](#2-setup)
   - [2.1 Access Authorization](#21-access-authorization)
-  - [2.2 Install Dependencies](#22-install-dependencies)
-  - [2.3 Run the Scripts](#23-run-the-scripts)
+  - [2.2 Project Setup](#22-project-setup)
+  - [2.3 Install Dependencies](#23-install-dependencies)
+  - [2.4 Run the Scripts](#24-run-the-scripts)
 - [3. Results Storage](#3-results-storage)
 - [4. Thank You!](#4-thank-you)
 
