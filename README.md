@@ -148,7 +148,7 @@ Here is how we run the files `01_asr.py` and `02_asr.py`:
    python3 02_asr.py
    ```
 
-4. (Optional) After running both scripts, run the the following bash code to copy the csv file from Google storage to your local storage. Note that the fields are not in order, which is why we manually make a query in order to retrieve the results in `02_asr.py`.
+4. (Optional) After running both scripts, run the the following bash code to copy the csv file from Google storage to your local storage. The placeholder `asr_demo` should be replaced with the path and/or name of your Storage Bucket. Note that the fields are not in order, which is why we manually make a query in order to retrieve the results in `02_asr.py`.
 
    ```bash
    gsutil cp gs://asr_demo/results/*.csv ./Results/
