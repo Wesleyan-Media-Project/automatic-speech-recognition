@@ -193,3 +193,6 @@ When you run `01_asr.py` and `02_asr.py`, the resulting data is saved in two loc
 
 <p align="center" style="display: flex; justify-content: center; align-items: center;">
   <a href="https://privacytechlab.org/" style="margin-right: 20px;">
+    <img src="images/plt_logo.png" width="200px" alt="privacy-tech-lab logo">
+  </a>
+</p>
