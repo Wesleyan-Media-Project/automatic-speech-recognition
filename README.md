@@ -6,7 +6,7 @@ This repo is a part of the [Cross-platform Election Advertising Transparency Ini
 
 To analyze the different dimensions of political ad transparency we have developed an analysis pipeline. The scripts in this repo are part of the Data Processing Step in our pipeline.
 
-![A picture of the pipeline diagram](CREATIVE_step2_032524.png)
+![A picture of the pipeline diagram](images/CREATIVE_step2_032524.png)
 
 ## Table of Contents
 
@@ -149,7 +149,7 @@ Here is how we run the files `01_asr.py` and `02_asr.py`:
    python3 02_asr.py
    ```
 
-4. (Optional) After running both scripts, run the the following bash code if you wish to copy the csv file directly from Google storage to your local storage. The placeholder `asr_demo` should be replaced with the path and/or name of your Storage Bucket. Note that the fields of the `csv` that is retrieved using this command are not in order, which is why  in `02_asr.py` we choose to manually make a query in order to retrieve the results.
+4. (Optional) After running both scripts, run the the following bash code if you wish to copy the csv file directly from Google storage to your local storage. The placeholder `asr_demo` should be replaced with the path and/or name of your Storage Bucket. Note that the fields of the `csv` that is retrieved using this command are not in order, which is why in `02_asr.py` we choose to manually make a query in order to retrieve the results.
 
    ```bash
    gsutil cp gs://asr_demo/results/*.csv ./Results/
@@ -173,7 +173,7 @@ When you run `01_asr.py` and `02_asr.py`, the resulting data is saved in two loc
 
 <p align="center" style="display: flex; justify-content: center; align-items: center;">
   <a href="https://www.nsf.gov/awardsearch/showAward?AWD_ID=2235006">
-    <img class="img-fluid" src="nsf.png" height="150px" alt="National Science Foundation Logo">
+    <img class="img-fluid" src="images/nsf.png" height="150px" alt="National Science Foundation Logo">
   </a>
 </p>
 
@@ -181,13 +181,13 @@ When you run `01_asr.py` and `02_asr.py`, the resulting data is saved in two loc
 
 <p align="center" style="display: flex; justify-content: center; align-items: center;">
   <a href="https://www.creativewmp.com/">
-    <img class="img-fluid" src="CREATIVE_logo.png"  width="220px" alt="CREATIVE Logo">
+    <img class="img-fluid" src="images/CREATIVE_logo.png"  width="220px" alt="CREATIVE Logo">
   </a>
 </p>
 
 <p align="center" style="display: flex; justify-content: center; align-items: center;">
   <a href="https://mediaproject.wesleyan.edu/">
-    <img src="wmp-logo.png" width="218px" height="100px" alt="Wesleyan Media Project logo">
+    <img src="images/wmp-logo.png" width="218px" height="100px" alt="Wesleyan Media Project logo">
   </a>
 </p>
 
