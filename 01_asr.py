@@ -1,6 +1,6 @@
-# Step 1: Run the the following bash code to copy wav files to google storage 
-# Replace 'LOCAL_PATH_TO_WAV_FILES' and 'storage_bucket_path' with your own paths
-# gsutil -m cp -r LOCAL_PATH_TO_WAV_FILES gs://storage_bucket_path/
+# Step 1: Run the the following bash code to copy wav file folder to google storage 
+# Replace '...' with path leading up to asr folder and 'storage_bucket_path' with your own sb path
+# gsutil -m cp -r .../automatic-speech-recognition/sample_wavs gs://storage_bucket_path/
 
 # Step 2: Replace code with your own credentials/filepaths wherever specified
 # by comments.
@@ -25,10 +25,10 @@ credentials = service_account.Credentials.from_service_account_file(
 )
 
 # To copy files from storage bucket to local (current directory) I used command:
-# gsutil cp gs://asr_demo/wav_files/*.wav .
+# gsutil cp gs://asr_demo/sample_wavs/*.wav .
 
-# TODO: Replace with own local path to .wav files
-path_wav = "/wav_files/"
+# TODO: Replace with FULL path to files in sample_wavs folder
+path_wav = "/sample_wavs/"
 
 # Instantiates a bq client
 # TODO: Replace project, dataset, and table names with your own
@@ -65,7 +65,7 @@ for wav in tqdm(os.listdir(path_wav)[:]):
         file_name = path_wav + wav
         with io.open(file_name, 'rb') as audio_file:
             content = audio_file.read()
-        audio = speech.RecognitionAudio(uri='gs://asr_demo/wav_files/'+wav) # TODO: Replace uri with own gs path
+        audio = speech.RecognitionAudio(uri='gs://asr_demo/sample_wavs/'+wav) # TODO: Replace uri with own gs path
         config = speech.RecognitionConfig(
             #encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
             #sample_rate_hertz=16000,
