@@ -68,7 +68,7 @@ The list of permissions include:
 - "Storage Object Creator"
 - "Storage Object Viewer"
 
-Here is how can grant the permissions:
+Here is how you can grant the permissions:
 
 1. In the Cloud Console, click the navigation menu and select "IAM & Admin".
 
