@@ -88,7 +88,7 @@ In order to copy files between your local drive and Google Storage, you need to 
 
 **NOTE**: If you are receiving the error `gcloud: command not found`, try opening a new terminal window in order to have your changes take effect.
 
-Then, in order to authorize the gcloud CLI using a service account key, run the following command, where `KEY_FILE` is replaced with the full path to your service account key file ([source](https://cloud.google.com/sdk/docs/authorizing)):
+Then, in order to authorize the gcloud CLI using a service account key, run the following command, where `KEY_FILE` is replaced with the full path to your service account key file ([source](https://cloud.google.com/sdk/docs/authorizing#key)):
 
 ```bash
 gcloud auth login --cred-file=KEY_FILE
