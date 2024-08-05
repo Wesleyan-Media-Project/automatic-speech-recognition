@@ -62,12 +62,13 @@ Here is how you can set up the credentials:
 
    **NOTE**: If you are receiving the error `gcloud: command not found`, try opening a new terminal window in order to have your changes take effect.
 
-5. Then, in order to authorize the gcloud CLI using a service account key, run the following command, where `KEY_FILE` is replaced with the full path to your service account key file ([source](https://cloud.google.com/sdk/docs/authorizing#key))
+5. Then, in order to confirm the authorization of the gcloud CLI using a service account key, run the following command, where `KEY_FILE` is replaced with the full path to your service account key file ([source](https://cloud.google.com/sdk/docs/authorizing#key))
 
    ```bash
    gcloud auth login --cred-file=KEY_FILE
    ```
 
+   If you're told that the account is already authenticated, then you are good to go, and do not have to overwrite the existing credentials.
    You can double-check the list of accounts whose credentials are stored on the local system using the command:
 
    ```bash
