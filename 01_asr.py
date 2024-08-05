@@ -18,26 +18,32 @@ from tqdm import tqdm
 from google.cloud import speech, bigquery
 from google.oauth2 import service_account
 
+# TODO: Replace project, dataset, bucket, table names with your own
+#nAdditionally, replace path vars with FULL local path to your service key json and automatic-speech-recognition directory
+bucket_name = 'asr_demo'
+project = "wmp-sandbox"
+dataset_id = "asr_demo"
+table_id = "asr_test"
+path_to_service_key = 'service-key.json'
+path_to_asr = ".../automatic-speech-recognition"
+
 # Activates google credentials
-# TODO: Replace with your own service account key file path
 credentials = service_account.Credentials.from_service_account_file(
-    'service-key.json',
+    path_to_service_key,
 )
 
 # To copy files from storage bucket to local (current directory) I used command:
 # gsutil cp gs://asr_demo/sample_wavs/*.wav .
 
-# TODO: Replace with FULL path to files in sample_wavs folder
-path_wav = "/sample_wavs/"
+path_wav = f"{path_to_asr}/sample_wavs/"
 
 # Instantiates a bq client
-# TODO: Replace project, dataset, and table names with your own
-bq_client = bigquery.Client(project='wmp-sandbox', credentials=credentials)
-dataset_ref = bq_client.dataset('asr_demo')
-table_ref = dataset_ref.table('asr_test')
+bq_client = bigquery.Client(project=project, credentials=credentials)
+dataset_ref = bq_client.dataset(dataset_id)
+table_ref = dataset_ref.table(table_id)
 # query clears the table prior to populating it, replace 'wmp-sandbox.asr_demo.asr_test' with your own info
-query = """
-    TRUNCATE TABLE `wmp-sandbox.asr_demo.asr_test`
+query = f"""
+    TRUNCATE TABLE `{project}.{dataset_id}.{table_id}`
 """
 query_job = bq_client.query(query)
 
@@ -65,7 +71,7 @@ for wav in tqdm(os.listdir(path_wav)[:]):
         file_name = path_wav + wav
         with io.open(file_name, 'rb') as audio_file:
             content = audio_file.read()
-        audio = speech.RecognitionAudio(uri='gs://asr_demo/sample_wavs/'+wav) # TODO: Replace uri with own gs path
+        audio = speech.RecognitionAudio(uri=f'gs://{bucket_name}/sample_wavs/'+wav)
         config = speech.RecognitionConfig(
             #encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
             #sample_rate_hertz=16000,
@@ -102,8 +108,7 @@ for wav in tqdm(os.listdir(path_wav)[:]):
         }
 
         # Convert results into json, stores locally in new temp_jsons folder
-        # TODO: Replace "current_path" with the full path to the automatic-speech-recognition folder in your local
-        directory = os.path.join("current_path", "temp_jsons")
+        directory = os.path.join(path_to_asr, "temp_jsons")
         os.makedirs(directory, exist_ok=True)
         curr_json_path = "./temp_jsons/" + curr_vid + ".json"
         with open(curr_json_path, "w") as outfile:

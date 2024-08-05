@@ -6,20 +6,23 @@ import pandas as pd
 from google.cloud import bigquery
 from google.oauth2 import service_account
 
-# Activates google credentials
-# TODO: Replace with your own service account key file
-credentials = service_account.Credentials.from_service_account_file(
-    'service-key.json',
-)
-
-# TODO: Replace project, dataset, bucket, and table names with your own
-client = bigquery.Client(project='wmp-sandbox', credentials=credentials)
-bucket_name = 'asr_demo/results'
+# TODO: Replace project, dataset, bucket, table names with your own
+#nAdditionally, replace path vars with FULL local path to your service key json and automatic-speech-recognition directory
+bucket_name = 'asr_demo'
 project = "wmp-sandbox"
 dataset_id = "asr_demo"
 table_id = "asr_test"
+path_to_service_key = 'service-key.json'
+path_to_asr = ".../automatic-speech-recognition"
 
-destination_uri = "gs://{}/{}".format(bucket_name, "gs_asr_results.csv")
+# Activates google credentials
+credentials = service_account.Credentials.from_service_account_file(
+    path_to_service_key,
+)
+
+client = bigquery.Client(project=project, credentials=credentials)
+
+destination_uri = f"gs://{bucket_name}/results/gs_asr_results.csv"
 dataset_ref = bigquery.DatasetReference(project, dataset_id)
 table_ref = dataset_ref.table(table_id)
 
@@ -32,13 +35,12 @@ extract_job = client.extract_table(
 extract_job.result()  # Waits for job to complete.
 
 print(
-    "Exported {}:{}.{} to {}".format(project, dataset_id, table_id, destination_uri)
+    f"Exported {project}:{dataset_id}.{table_id} to {destination_uri}"
 )
 
 # Make a query to order columns correctly and export as csv directly from bigquery table
-# TODO: Replace `wmp-sandbox.asr_demo.asr_test` with own information
-query = """
-    SELECT filename, google_asr_text, stt_confidence FROM `wmp-sandbox.asr_demo.asr_test`
+query = f"""
+    SELECT filename, google_asr_text, stt_confidence FROM `{project}.{dataset_id}.{table_id}`
 """
 query_job = client.query(query)  # Make an API request.
 
@@ -56,8 +58,7 @@ df['filename'] = vids
 df['google_asr_text'] = transcripts
 df['stt_confidence'] = confs
 
-# TODO: Replace "current_path" with the full path to the automatic-speech-recognition folder in your local
-directory = os.path.join("current_path", "Results")
+directory = os.path.join(path_to_asr, "Results")
 os.makedirs(directory, exist_ok=True)
 df.to_csv('./Results/asr_results.csv', index=False, encoding="utf-8")
 print("asr_results.csv saved to Results folder in local.")
