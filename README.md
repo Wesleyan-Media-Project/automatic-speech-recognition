@@ -25,7 +25,7 @@ The scripts in this repository work to perform automatic speech recognition on p
 
 ## 2. Setup
 
-### 2.1 Access Authorization
+### 2.1 Project Creation & Access Authorization
 
 The Automatic Speech Recognition (ASR) codes require Google Cloud credentials to interact with Google Cloud Storage, Google BigQuery, and the Google Cloud Speech-to-Text API.
 
@@ -33,56 +33,60 @@ To run the script in this repo, you need to have your own Google Cloud credentia
 
 Here is how you can set up the credentials:
 
-0. If you have not done it yet, register with [Google Cloud Platform (GCP)](https://cloud.google.com/) and create a project.
+1. Register with [Google Cloud Platform (GCP)](https://cloud.google.com/) and create a project.
 
-1. Set up your Google Cloud project for Speech-to-Text
+   **NOTE**: If you are on a restricted Google account, such as a school account, that prevents you from creating a Google Cloud project, you will need to use a different account.
+
+2. Set up your Google Cloud project for Speech-to-Text and BigQuery:
 
    - Go to the [Google Cloud Console](https://console.cloud.google.com).
    - Click the [project drop-down](https://console.cloud.google.com/projectselector2/home/dashboard) and select or create the project for which you want to add an API key.
    - Click the navigation menu (three lines in the top left corner) and select "API & Services".
    - Click "Library" in the left side panel, then search for and enable the "Cloud Speech-to-Text API" and "BigQuery API".
 
-2. Create a Service Account:
+3. Create a Service Account:
 
    - In the Cloud Console, click the navigation menu and select "IAM & Admin".
    - Click "Service Accounts" in the left side panel.
    - Click "Create Service Account" located on the top under the search bar.
    - Enter a name for the service account.
-   - Grant the service account the necessary access to your project by assigning it the "BigQuery Admin" and "Storage Object Admin" roles.
+   - Grant the service account access to your project by assigning it the **BigQuery Admin** and **Storage Object Admin** roles. There's no need to grant any users access to the service account, and so you can click through to "Done" after assigning the roles.
    - Click on the service account you just created.
-   - Under the "Keys" tab on the top, click "Add Key", click "Create New Key", choose "JSON", and click "Create".
-     This will download a JSON key file. Save the key file on you computer.
+   - Under the "Keys" tab on the top, click "Add Key", click "Create New Key", choose "JSON", and click "Create". This will download a JSON key file, which you should save in your local.
 
-- For more information about setting up Google Cloud credentials for ASR, you can go to [Google's ASR documentation](https://cloud.google.com/speech-to-text/docs/before-you-begin).
-- **NOTE**: If you are on a restricted Google account, such as a school account, that prevents you from creating a Google Cloud project, you will need to use a different account.
+   For more information about setting up Google Cloud credentials for ASR, you can go to [Google's ASR documentation](https://cloud.google.com/speech-to-text/docs/before-you-begin).
+
+4. Install the Google Cloud CLI:
+
+   - In order to handle access authorization as well as copy files between your local drive and Google Storage, you need to install the `gsutil` and `gcloud` command-line tools, which can be achieved by installing the Google Cloud CLI. Follow [these instructions](https://cloud.google.com/storage/docs/gsutil_install#sdk-install) in order to download the required package, using your new service account email and project ID as credentials when walking through the `gcloud init` command.
+
+   **NOTE**: If you are receiving the error `gcloud: command not found`, try opening a new terminal window in order to have your changes take effect.
+
+5. Then, in order to authorize the gcloud CLI using a service account key, run the following command, where `KEY_FILE` is replaced with the full path to your service account key file ([source](https://cloud.google.com/sdk/docs/authorizing#key))
+
+   ```bash
+   gcloud auth login --cred-file=KEY_FILE
+   ```
+
+   You can double-check the list of accounts whose credentials are stored on the local system using the command:
+
+   ```bash
+   gcloud auth list
+   ```
+
+   and switch the active account by running the command below, where `ACCOUNT` is the full email address of the account:
+
+   ```bash
+   gcloud config set account ACCOUNT
+   ```
+
+   Make sure that the service account you just created is the active account.
 
 ### 2.2 Project Setup
 
 The ASR scripts require that you have a dataset and table within your project. Instructions on how to create a dataset is found [here](https://cloud.google.com/bigquery/docs/datasets), and instructions on how to create a table is found [here](https://cloud.google.com/bigquery/docs/tables).
 
 ### 2.3 Install Dependencies
-
-In order to copy files between your local drive and Google Storage, you need to install the `gsutil` tool, which can be achieved by installing the Google Cloud CLI. Instructions on how to do so (including the package that must be downloaded) is found [here](https://cloud.google.com/storage/docs/gsutil_install).
-
-**NOTE**: If you are receiving the error `gcloud: command not found`, try opening a new terminal window in order to have your changes take effect.
-
-Then, in order to authorize the gcloud CLI using a service account key, run the following command, where `KEY_FILE` is replaced with the full path to your service account key file ([source](https://cloud.google.com/sdk/docs/authorizing#key)):
-
-```bash
-gcloud auth login --cred-file=KEY_FILE
-```
-
-You can double-check the list of accounts whose credentials are stored on the local system using the command:
-
-```bash
-gcloud auth list
-```
-
-and switch the active account by running the command below, where `ACCOUNT` is the full email address of the account:
-
-```bash
-gcloud config set account ACCOUNT
-```
 
 We recommend creating and activating a Python virtual environment before running the .py scripts:
 
