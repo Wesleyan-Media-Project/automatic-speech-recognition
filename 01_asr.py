@@ -19,7 +19,8 @@ from google.cloud import speech, bigquery
 from google.oauth2 import service_account
 
 # TODO: Replace project, dataset, bucket, table names with your own
-#nAdditionally, replace path vars with FULL local path to your service key json and automatic-speech-recognition directory
+# Additionally, replace path vars with FULL local path to your service key json and automatic-speech-recognition directory
+# Once you have revised all necessary variables, you can copy and paste to '02_asr.py', as they use the same vars
 bucket_name = 'asr_demo'
 project = "wmp-sandbox"
 dataset_id = "asr_demo"
@@ -31,9 +32,6 @@ path_to_asr = ".../automatic-speech-recognition"
 credentials = service_account.Credentials.from_service_account_file(
     path_to_service_key,
 )
-
-# To copy files from storage bucket to local (current directory) I used command:
-# gsutil cp gs://asr_demo/sample_wavs/*.wav .
 
 path_wav = f"{path_to_asr}/sample_wavs/"
 

@@ -7,7 +7,8 @@ from google.cloud import bigquery
 from google.oauth2 import service_account
 
 # TODO: Replace project, dataset, bucket, table names with your own
-#nAdditionally, replace path vars with FULL local path to your service key json and automatic-speech-recognition directory
+# Additionally, replace path vars with FULL local path to your service key json and automatic-speech-recognition directory
+# Should be the same as in '01_asr.py'
 bucket_name = 'asr_demo'
 project = "wmp-sandbox"
 dataset_id = "asr_demo"

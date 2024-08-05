@@ -47,7 +47,8 @@ Here is how you can set up the credentials:
    - In the Cloud Console, click the navigation menu and select "IAM & Admin".
    - Click "Service Accounts" in the left side panel.
    - Click "Create Service Account" located on the top under the search bar.
-   - Enter a name and description for the service account.
+   - Enter a name for the service account.
+   - Grant the service account the necessary access to your project by assigning it the "BigQuery Admin" and "Storage Object Admin" roles.
    - Click on the service account you just created.
    - Under the "Keys" tab on the top, click "Add Key", click "Create New Key", choose "JSON", and click "Create".
      This will download a JSON key file. Save the key file on you computer.
@@ -57,30 +58,7 @@ Here is how you can set up the credentials:
 
 ### 2.2 Project Setup
 
-The ASR codes require a dataset and table within your project. Instructions on how to create a dataset is found [here](https://cloud.google.com/bigquery/docs/datasets), and instructions on how to create a table is found [here](https://cloud.google.com/bigquery/docs/tables).
-
-The ASR codes also require that you grant your service account permissions.
-
-The list of permissions include:
-
-- "BigQuery Admin"
-- "BigQuery User"
-- "Storage Object Creator"
-- "Storage Object Viewer"
-
-Here is how you can grant the permissions:
-
-1. In the Cloud Console, click the navigation menu and select "IAM & Admin".
-
-2. Click "IAM" on the left side panel.
-
-3. Under the "VIEW BY PRINCIPALS" tab, click "+ GRANT ACCESS".
-
-4. Under "Add principals", enter the service account.
-
-5. Under "Assign roles", add each of the permissions listed above.
-
-6. Click "Save".
+The ASR scripts require that you have a dataset and table within your project. Instructions on how to create a dataset is found [here](https://cloud.google.com/bigquery/docs/datasets), and instructions on how to create a table is found [here](https://cloud.google.com/bigquery/docs/tables).
 
 ### 2.3 Install Dependencies
 
