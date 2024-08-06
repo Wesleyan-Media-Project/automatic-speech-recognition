@@ -85,7 +85,7 @@ Here is how you can set up the credentials:
 
 ### 2.2 Project Setup
 
-The ASR scripts require that you have a dataset and table within your project.
+The ASR scripts require that you have a dataset, table and storage bucket within your project.
 
 To create a dataset ([source](https://cloud.google.com/bigquery/docs/datasets#create-dataset)):
 
@@ -102,7 +102,12 @@ To create a table ([source](https://cloud.google.com/bigquery/docs/tables#create
 - Enter any table name for the Table field, and leave all other fields as the default.
 - Proceed directly to the **Create Table** button and click.
 
-Instructions on how to create a dataset is found [here](https://cloud.google.com/bigquery/docs/datasets), and instructions on how to create a table is found [here](https://cloud.google.com/bigquery/docs/tables).
+To create a storage bucket ([source](https://cloud.google.com/storage/docs/creating-buckets#create_a_new_bucket)):
+
+- In Google Cloud Console, go to the [Cloud Storage Buckets](https://console.cloud.google.com/storage/browser?_ga=2.177166885.1250381803.1722868661-1595627548.1700335068) page.
+- Click the **+ Create** button.
+- Enter a name for the bucket, and leave all other fields as their default.
+- Proceed directly to the **Create** button and click.
 
 ### 2.3 Dependency Installation
 
