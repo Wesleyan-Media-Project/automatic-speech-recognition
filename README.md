@@ -58,7 +58,7 @@ Here is how you can set up the credentials:
 
 4. Install the Google Cloud CLI:
 
-   - In order to handle access authorization as well as copy files between your local drive and Google Storage, you need to install the `gsutil` and `gcloud` command-line tools, which can be achieved by installing the Google Cloud CLI. Follow [these instructions](https://cloud.google.com/storage/docs/gsutil_install#sdk-install) in order to download the required package, using your new service account email and project ID as credentials when walking through the `gcloud init` command.
+   In order to handle access authorization as well as copy files between your local drive and Google Storage, you need to install the `gsutil` and `gcloud` command-line tools, which can be achieved by installing the Google Cloud CLI. Follow [these instructions](https://cloud.google.com/storage/docs/gsutil_install#sdk-install) in order to download the required package, using your new service account email and project ID as credentials when walking through the `gcloud init` command.
 
    **NOTE**: If you are receiving the error `gcloud: command not found`, try opening a new terminal window in order to have your changes take effect.
 
@@ -85,9 +85,26 @@ Here is how you can set up the credentials:
 
 ### 2.2 Project Setup
 
-The ASR scripts require that you have a dataset and table within your project. Instructions on how to create a dataset is found [here](https://cloud.google.com/bigquery/docs/datasets), and instructions on how to create a table is found [here](https://cloud.google.com/bigquery/docs/tables).
+The ASR scripts require that you have a dataset and table within your project.
 
-### 2.3 Install Dependencies
+To create a dataset ([source](https://cloud.google.com/bigquery/docs/datasets#create-dataset)):
+
+- Open the [BigQuery page](https://console.cloud.google.com/bigquery?_ga=2.103652224.1250381803.1722868661-1595627548.1700335068) in the Google Cloud console.
+- In the **Explorer** panel, select the project for which you want to create a dataset.
+- Click the Actions button (three circles in a column) of the project, and then click the **Create dataset** option.
+- Enter any unique name for the Dataset ID. Leave all other fields as the default.
+- Proceed directly to the **Create Dataset** button and click.
+
+To create a table ([source](https://cloud.google.com/bigquery/docs/tables#create_an_empty_table_with_a_schema_definition)):
+
+- In the [BigQuery](https://console.cloud.google.com/bigquery?_ga=2.103652224.1250381803.1722868661-1595627548.1700335068) **Explorer** panel, select a project and dataset for which you want to create a table.
+- Click the Actions button (three circles in a column) of the dataset, and then click the **Create table** option.
+- Enter any table name for the Table field, and leave all other fields as the default.
+- Proceed directly to the **Create Table** button and click.
+
+Instructions on how to create a dataset is found [here](https://cloud.google.com/bigquery/docs/datasets), and instructions on how to create a table is found [here](https://cloud.google.com/bigquery/docs/tables).
+
+### 2.3 Dependency Installation
 
 We recommend creating and activating a Python virtual environment before running the .py scripts:
 
