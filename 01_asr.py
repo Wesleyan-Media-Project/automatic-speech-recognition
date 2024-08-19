@@ -1,12 +1,8 @@
-# Step 1: Run the the following bash code to copy wav file folder to google storage 
-# Replace '...' with path leading up to asr folder and 'storage_bucket_path' with your own sb path
-# gsutil -m cp -r .../automatic-speech-recognition/sample_wavs gs://storage_bucket_path/
-
-# Step 2: Replace code with your own credentials/filepaths wherever specified
-# by comments.
-
-# Step 3 (optional): Activate an environment before running .py file
-# source wmp/bin/activate
+# Before running this script, run the following bash code to copy wav file folder to google storage 
+# NOTE: This command assumes the automatic-speech-recognition folder is your current directory,
+# otherwise you should replace "./sample_wavs" with the correct path leading to the sample_wavs folder
+# Also make sure to replace 'asr_demo' with your own storage bucket
+# gsutil -m cp -r ./sample_wavs gs://asr_demo
 
 # Make sure you have all the following imports installed
 

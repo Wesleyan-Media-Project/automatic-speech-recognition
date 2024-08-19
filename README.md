@@ -90,7 +90,7 @@ The ASR scripts require that you have a dataset, table and storage bucket within
 To create a dataset ([source](https://cloud.google.com/bigquery/docs/datasets#create-dataset)):
 
 - Open the [BigQuery page](https://console.cloud.google.com/bigquery?_ga=2.103652224.1250381803.1722868661-1595627548.1700335068) in the Google Cloud console.
-- In the **Explorer** panel, select the project for which you want to create a dataset.
+- In the **Explorer** panel, which can be found directly to the right of the BigQuery panel (you may have to toggle it open), select the project for which you want to create a dataset.
 - Click the Actions button (three circles in a column) of the project, and then click the **Create dataset** option.
 - Enter any unique name for the Dataset ID. Leave all other fields as the default.
 - Proceed directly to the **Create Dataset** button and click.
@@ -141,10 +141,10 @@ The exact version of each package we used is listed in the [requirements.txt](ht
 
 Here is how we run the files `01_asr.py` and `02_asr.py`:
 
-1. Run the following bash code to copy wav files to Google Storage. If you have not yet created a Cloud Storage Bucket within your Google Cloud project, you can do so easily by following [these instructions](https://cloud.google.com/storage/docs/creating-buckets). The placeholder `...` should be replaced with your full local path leading up to the asr folder, whereas `storage_bucket_path` should be replaced with the path and/or name of your Storage Bucket.
+1. Run the following bash code to copy wav files to Google Storage. If you have not yet created a Cloud Storage Bucket within your Google Cloud project, you can do so easily by following [these instructions](https://cloud.google.com/storage/docs/creating-buckets). `storage_bucket_path` should be replaced with the path and/or name of your Storage Bucket. Furthermore, this code assumes that the `automatic-speech-recognition` folder is your current directory. Otherwise, you should replace `./sample_wavs` with the local path leading to the `sample_wavs` folder in this repository.
 
    ```bash
-   gsutil -m cp -r .../automatic-speech-recognition/sample_wavs gs://storage_bucket_path
+   gsutil -m cp -r ./sample_wavs gs://storage_bucket_path
    ```
 
 2. Look through the scripts and insert your own credentials/filepaths wherever it is specified. Comments in the code indicate where this is necessary.
