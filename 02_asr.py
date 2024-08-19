@@ -40,6 +40,7 @@ print(
 )
 
 # Make a query to order columns correctly and export as csv directly from bigquery table
+
 query = f"""
     SELECT filename, google_asr_text, stt_confidence FROM `{project}.{dataset_id}.{table_id}`
 """
@@ -63,5 +64,12 @@ directory = os.path.join(path_to_asr, "Results")
 os.makedirs(directory, exist_ok=True)
 df.to_csv('./Results/asr_results.csv', index=False, encoding="utf-8")
 print("asr_results.csv saved to Results folder in local.")
-# Optional: Alternatively, to copy files directly from storage bucket to local (current directory) use command:
-# gsutil cp gs://asr_demo/results/*.csv ./Results/
+
+# Optional: Alternatively, to copy files directly from storage bucket
+# to local automatic-speech-recognition directory, in terminal use command,
+# where "asr_demo" should be replaced with your own bucket name:
+
+# gsutil cp gs://asr_demo/results/gs_asr_results.csv ./Results/
+
+# Note that the fields of the csv that is retrieved using this command are not in order, 
+# which is why in this script we choose to manually make a query in order to retrieve the results.
