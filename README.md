@@ -135,6 +135,8 @@ pip3 install google-cloud-bigquery
 pip3 install google-auth
 ```
 
+The exact version of each package we used is listed in the [requirements.txt](https://github.com/Wesleyan-Media-Project/automatic-speech-recognition/blob/main/requirements.txt) file. You can install the specific versions by instead running, for instance, `pip3 install pandas==2.2.2`. This should not be necessary, but may be helpful if you run into errors.
+
 ### 2.4 Run the Scripts
 
 Here is how we run the files `01_asr.py` and `02_asr.py`:
