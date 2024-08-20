@@ -43,6 +43,8 @@ Here is how you can set up the credentials:
    - Click the [project drop-down](https://console.cloud.google.com/projectselector2/home/dashboard) and select or create the project for which you want to add an API key.
    - Click the navigation menu (three lines in the top left corner) and select "API & Services".
    - Click "Library" in the left side panel, then search for and enable the "Cloud Speech-to-Text API", "BigQuery API", "Cloud Resource Manager API" and "Service Usage API".
+  
+   **NOTE**: In order to use the Google Cloud APIs, the project must be linked to an _active_ billing account. Documentation on how to enable billing for your project can be found [here](https://cloud.google.com/billing/docs/how-to/modify-project#enable_billing_for_a_project).
 
 3. Create a Service Account:
 
