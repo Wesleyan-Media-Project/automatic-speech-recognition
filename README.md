@@ -178,7 +178,7 @@ When you run `01_asr.py` and `02_asr.py`, the resulting data is saved in two loc
 
 <p align="center"><strong>We would like to thank our supporters!</strong></p><br>
 
-<p align="center">This material is based upon work supported by the National Science Foundation under Grant Numbers 2235006, 2235007, and 2235008.</p>
+<p align="center">This material is based upon work supported by the National Science Foundation under Grant Numbers 2235006, 2235007, and 2235008. Any opinions, findings, and conclusions or recommendations expressed in this material are those of the author(s) and do not necessarily reflect the views of the National Science Foundation.</p>
 
 <p align="center" style="display: flex; justify-content: center; align-items: center;">
   <a href="https://www.nsf.gov/awardsearch/showAward?AWD_ID=2235006">
